@@ -39,13 +39,13 @@
       <table class="table table-hover table-striped table-bordered mx-auto text-center my-5">
         <thead class="thead-dark text-uppercase">
           <th>TICKET ID</th>
-          <th>TICKET NAME</th>
-          <th>HOME TEAM</th>
-          <th>AWAY TEAM</th>
-          <th>TICKET DATE</th>
-          <th>TICKET CATEGORY</th>
-          <th>TICKET PRICE</th>
-          <th>TICKET QUANTITY</th>
+          <th>NAME</th>
+          <th>HOME</th>
+          <th>AWAY</th>
+          <th>DATE</th>
+          <th>CATEGORY</th>
+          <th>PRICE</th>
+          <th>QUANTITY</th>
           <th></th>
         </thead>
         <tbody>

@@ -95,5 +95,26 @@
       }
     }
 
+    public function deleteTicket($ticket_id){
+      $sql = "DELETE FROM tickets WHERE ticket_id = '$ticket_id'";
+
+      $result = $this->conn->query($sql);
+
+      if($result == false){
+        die("Cannot Delete: ".$this->conn->error);
+      }else{
+        header("Location: ../views/shop.php");
+      }
+    }
+
+    public function pdateTicket($orderQuantity, $ticket_id, $newQuantity){
+      $sql = "UPDATE tickets SET ticket_quantity = '$newQuantity' WHERE ticket_id = '$ticket_id'";
+
+      $result = $this->conn->query($sql);
+
+      if($result == false){
+        die("CANNNOT UPDATE: ".$this->conn->error);
+      }
+    }
   }
 ?>

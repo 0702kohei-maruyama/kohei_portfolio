@@ -40,11 +40,14 @@
     </div>
     <table class="table table-hover table-striped table-bordered mx-auto text-center my-5">
       <thead class="thead-dark text-uppercase">
-        <th>ITEM ID</th>
-        <th>ITEM NAME</th>
-        <th>ITEM CATEGORY</th>
-        <th>ITEM PRICE</th>
-        <th>ITEM QUANTITY</th>
+        <th>TICKET ID</th>
+        <th>NAME</th>
+        <th>HOME</th>
+        <th>AWAY</th>
+        <th>DATE</th>
+        <th>CATEGORY</th>
+        <th>PRICE</th>
+        <th>QUANTITY</th>
         <th></th>
       </thead>
       <tbody>
@@ -55,6 +58,13 @@
         <tr>
           <td><?=$ticket_detail['ticket_id']?></td>
           <td><?=$ticket_detail['ticket_name']?></td>
+          <td>
+            <img src="../uploads/<?= $ticket_detail['ticket_img_home']?>" alt="" class="img-thumbnail w-50">
+          </td>
+          <td>
+            <img src="../uploads/<?= $ticket_detail['ticket_img_away']?>" alt="" class="img-thumbnail w-50">
+          </td>
+          <td><?=$ticket_detail['ticket_date']?></td>
           <td><?=$ticket_detail['ticket_category']?></td>
           <td><?=$ticket_detail['ticket_price']?></td>
           <td><?=$ticket_detail['ticket_quantity']?></td>

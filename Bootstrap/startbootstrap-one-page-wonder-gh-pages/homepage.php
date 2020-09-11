@@ -64,7 +64,7 @@
         <div class="col-lg-6 order-lg-2">
           <div class="p-5">
             <a href="views/shopSoccer.php">
-              <img class="img-fluid rounded-circle" src="img/01.jpg" alt="">
+              <img class="img-fluid rounded-circle" src="img/soccer.jpg" alt="">
             </a>
           </div>
         </div>
@@ -84,7 +84,7 @@
         <div class="col-lg-6">
           <div class="p-5">
             <a href="views/shopBaseball.php">
-              <img class="img-fluid rounded-circle" src="img/02.jpg" alt="">
+              <img class="img-fluid rounded-circle" src="img/baseball.jpg" alt="">
             </a>
           </div>
         </div>
@@ -104,7 +104,7 @@
         <div class="col-lg-6 order-lg-2">
           <div class="p-5">
             <a href="views/shopBasketball.php">
-              <img class="img-fluid rounded-circle" src="img/03.jpg" alt="">
+              <img class="img-fluid rounded-circle" src="img/basketball.jpg" alt="">
             </a>
           </div>
         </div>

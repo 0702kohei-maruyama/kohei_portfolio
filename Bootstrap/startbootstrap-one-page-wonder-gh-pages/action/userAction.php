@@ -85,7 +85,41 @@
     }else{
       echo "Error in Uploading the picture.";
     }
+  }elseif(isset($_POST['Buy'])){
+    $orderQuantity = $_POST['orderQuantity'];
+    $ticketName = $_POST['ticketName'];
+    $ticketPrice = $_POST['ticketPrice'];
+    $ticketQuatitiy = $_POST['ticketQuatitiy'];
+    $ticket_id = $_POST['ticketID'];
+    $user_id = $_SESSION['user_id'];
 
+    $newQuantity = $ticketQuatitiy - $orderQuantity;
+    if($orderQuantity > $ticketQuatitiy){
+      echo "We cannot accept your order.";
+    }else{
+      $ticket->updateTicket($orderQuantity, $ticket_id, $newQuantity);
+      $order->createOrder($orderQuantity, $user_id, $ticket_id);
+    }
+  }elseif(isset($_POST['btnBuy'])){
+    $ticket_id = $_POST['ticketID'];
+    $ticketName = $_POST['ticketName'];
+    $ticketCategory = $_POST['ticketCategory'];
+    $ticketPrice = $_POST['ticketPrice'];
+    $ticketQuatitiy = $_POST['ticketQuatitiy'];
+    $orderQuantity = $_POST['orderQuantity'];
+    $orderChild = $_POST['orderChild'];
+
+    $orderAdult = $orderQuantity - $orderChild;
+    $priceChild = $orderChild * $ticketPrice / 2;
+    $priceAdult = $orderAdult * $ticketPrice;
+    $totalPrice = $priceChild + $priceAdult;
+
+    if($orderQuantity > $ticketQuatitiy){
+      echo "Your order is not accetpable.";
+    }else{
+      $order->showOrder($ticket_id);
+      header("Location: ../views/confirmOrder.php");
+    }
 
   }
 ?>

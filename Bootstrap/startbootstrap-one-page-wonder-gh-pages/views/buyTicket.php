@@ -70,6 +70,8 @@
             <h3 class="text-center w-50 display-4">Child: </h3>
             <input type="number" name="orderChild" class="form-control mt-2 text-center  w-50 float-right border">
           </div>
+            <p class="text-center"><span class="text-danger">* </span> Child price is 50% of oridinal price.</p>
+            <p class="text-center"><span class="text-danger">* </span> Child is defined as 6-12years old.</p>
 
           <button type="submit" name="btnBuy" class="btn btn-block btn-danger">Buy</button>
 
