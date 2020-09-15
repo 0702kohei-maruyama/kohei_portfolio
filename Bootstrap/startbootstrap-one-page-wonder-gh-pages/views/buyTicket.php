@@ -6,30 +6,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="Description" content="Enter your description here"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.5.2/materia/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
-<link rel="stylesheet" href="assets/css/style.css">
-<title>ORDER</title>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>ORDER</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/f7ad5e1e35.js" crossorigin="anonymous"></script>
+  <!-- Custom fonts for this template -->
+  <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="../css/one-page-wonder.min.css" rel="stylesheet">
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-custom fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Buy E-Ticket</a>
+      <a class="navbar-brand" href="homepage.php">Buy E-Ticket</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="views/register.php">Sign Up</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="views/login.php">Log In</a>
+            <a class="nav-link" href="logout.php">
+              <i class="fas fa-sign-out-alt fa-lg"></i> Log Out
+            </a>
           </li>
         </ul>
       </div>
@@ -45,7 +52,7 @@
 
       <div class="card-body">
         
-        <form action="../action/userAction.php" method="post">
+        <form action="" method="post">
           <div class="form-row">
             <h3 class="text-center w-50 float-left display-4">Price: </h3>
             <h3 class="text-center w-50 float-right display-4">$<?=$ticket_details['ticket_price']?></h3>
@@ -63,19 +70,65 @@
             <input type="hidden" name="ticketCategory"  value="<?=$ticket_details['ticket_category']?>">
             <input type="hidden" name="ticketPrice"  value="<?=$ticket_details['ticket_price']?>">
             <input type="hidden" name="ticketQuatitiy"  value="<?=$ticket_details['ticket_quantity']?>">
-            <input type="number" name="orderQuantity" class="form-control mt-2 text-center w-50 float-right border">
+            <input type="number" name="orderQuantity" class="form-control mt-2 text-center w-50 float-right border" required>
           </div>
 
           <div class="form-row">
             <h3 class="text-center w-50 display-4">Child: </h3>
-            <input type="number" name="orderChild" class="form-control mt-2 text-center  w-50 float-right border">
+            <input type="number" name="orderChild" class="form-control mt-2 text-center  w-50 float-right border" required>
           </div>
             <p class="text-center"><span class="text-danger">* </span> Child price is 50% of oridinal price.</p>
             <p class="text-center"><span class="text-danger">* </span> Child is defined as 6-12years old.</p>
 
-          <button type="submit" name="btnBuy" class="btn btn-block btn-danger">Buy</button>
-
+          <button type="submit" name="btnCalculate" class="btn btn-block btn-danger">Calculate</button>
         </form>
+
+        <?php
+    if(isset($_POST['btnCalculate'])){
+      $ticket_id = $_POST['ticketID'];
+      $ticketName = $_POST['ticketName'];
+      $ticketCategory = $_POST['ticketCategory'];
+      $ticketPrice = $_POST['ticketPrice'];
+      $ticketQuatitiy = $_POST['ticketQuatitiy'];
+      $orderQuantity = $_POST['orderQuantity'];
+      $orderChild = $_POST['orderChild'];
+      $user_id = $_SESSION['user_id'];
+
+      $orderAdult = $orderQuantity - $orderChild;
+      $priceChild = $orderChild * $ticketPrice / 2;
+      $priceAdult = $orderAdult * $ticketPrice;
+      $totalPrice = $priceChild + $priceAdult;
+
+      if($orderQuantity > $ticketQuatitiy){
+        echo "<h3 class='text-center mt-3'>We cannot accept your order.</h3>";
+      }else{
+
+      echo "<div class='row mt-4'>";
+      echo "<h3 class='col-md-6 text-center display-4'>Total: </h3>";
+      echo "<p class='h3col-md-6 text-center display-4'>$$totalPrice</p>";
+      echo "</div>";
+      ?>
+      <form action="../action/userAction.php" method="post">
+        <input type="hidden" name="ticketID"  value="<?=$ticket_details['ticket_id']?>">
+        <input type="hidden" name="ticketName"  value="<?=$ticket_details['ticket_name']?>">
+        <input type="hidden" name="ticketCategory"  value="<?=$ticket_details['ticket_category']?>">
+        <input type="hidden" name="ticketPrice"  value="<?=$ticket_details['ticket_price']?>">
+        <input type="hidden" name="ticketQuatitiy"  value="<?=$ticket_details['ticket_quantity']?>">
+        <input type="hidden" name="orderQuantity" value="<?=$orderQuantity?>">
+        <input type="hidden" name="orderChild" value="<?=$orderChild?>">
+        <input type="hidden" name="totalPrice" value="<?=$totalPrice?>">
+
+        <div class="form-row">
+          <a href="shop.php" class="btn btn-success btn-block col-mb-6">Cancel</a>
+          <button type="submit" name="btnBuy" class="btn btn-danger btn-block col-mb-6">Buy</button>
+        </div>
+          
+      </form>
+      <?php
+    }
+  }
+?>
+        
       </div>
     </div>
   </div>
@@ -84,3 +137,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+

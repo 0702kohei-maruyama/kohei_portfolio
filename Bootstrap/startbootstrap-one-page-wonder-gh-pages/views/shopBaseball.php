@@ -8,25 +8,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <meta name="Description" content="Enter your description here"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
-<link rel="stylesheet" href="assets/css/style.css">
-<title>SHOP</title>
+<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/f7ad5e1e35.js" crossorigin="anonymous"></script>
+<!-- Custom fonts for this template -->
+<link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="../css/one-page-wonder.min.css" rel="stylesheet">
+<title>BUY BASEBALL TICKET</title>
 </head>
 
   <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Buy E-Ticket</a>
+      <a class="navbar-brand" href="homepage.php">Buy E-Ticket</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="views/register.php">Sign Up</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="views/login.php">Log In</a>
+            <a class="nav-link" href="logout.php">
+            <i class="fas fa-sign-out-alt fa-lg"></i> Log Out</a>
           </li>
         </ul>
       </div>
@@ -35,8 +38,8 @@
 
 <body>
   <div class="container">
-    <div class="container text-center">
-      <h2 class="display-3"></h2>
+  <div class="container my-5 text-center">
+      <h2 class="display-3 p-4">View All Basetball Ticket</h2>
     </div>
     <table class="table table-hover table-striped table-bordered mx-auto text-center my-5">
       <thead class="thead-dark text-uppercase">
@@ -47,7 +50,6 @@
         <th>DATE</th>
         <th>CATEGORY</th>
         <th>PRICE</th>
-        <th>QUANTITY</th>
         <th></th>
       </thead>
       <tbody>
@@ -67,7 +69,6 @@
             <td><?=$ticket_detail['ticket_date']?></td>
             <td><?=$ticket_detail['ticket_category']?></td>
             <td>$<?=$ticket_detail['ticket_price']?></td>
-            <td><?=$ticket_detail['ticket_quantity']?></td>
             <td><a href="buyTicket.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-danger" role="button">Buy</a></td>
           </tr>
         <?php

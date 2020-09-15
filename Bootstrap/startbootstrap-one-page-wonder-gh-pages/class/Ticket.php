@@ -102,18 +102,18 @@
 
       if($result == false){
         die("Cannot Delete: ".$this->conn->error);
-      }else{
-        header("Location: ../views/shop.php");
       }
     }
 
-    public function pdateTicket($orderQuantity, $ticket_id, $newQuantity){
-      $sql = "UPDATE tickets SET ticket_quantity = '$newQuantity' WHERE ticket_id = '$ticket_id'";
+    public function updateTicket($newQuantity, $ticket_id, $ticketName){
+      $sql = "UPDATE tickets SET ticket_quantity = '$newQuantity' WHERE ticket_id = '$ticket_id' AND ticket_name = '$ticketName'";
 
       $result = $this->conn->query($sql);
 
       if($result == false){
         die("CANNNOT UPDATE: ".$this->conn->error);
+      }else{
+        header("Location: ../views/confirmed.php");
       }
     }
   }

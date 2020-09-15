@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SHOP</title>
+  <title>ORDER CONFIRMED</title>
 
   <!-- Bootstrap core CSS -->
   <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -22,9 +22,10 @@
   <link href="../css/one-page-wonder.min.css" rel="stylesheet">
 </head>
 <body>
+
   <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="homepage.php">BUY E-TICKET</a>
+      <a class="navbar-brand" href="homepage.php">Buy E-Ticket</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -32,55 +33,21 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a class="nav-link" href="logout.php">
-            <i class="fas fa-sign-out-alt fa-lg"></i> Log Out</a>
+              <i class="fas fa-sign-out-alt fa-lg"></i> Log Out
+            </a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-
-  <div class="container">
-    <div class="container my-5 text-center">
-      <h2 class="display-3 p-4">View All Ticket</h2>
-      <table class="table table-hover table-striped table-bordered mx-auto text-center my-5">
-        <thead class="thead-dark text-uppercase">
-          <th>TICKET ID</th>
-          <th>NAME</th>
-          <th>HOME</th>
-          <th>AWAY</th>
-          <th>DATE</th>
-          <th>CATEGORY</th>
-          <th>PRICE</th>
-          <th></th>
-        </thead>
-        <tbody>
-            <?php
-            $ticket_list = $ticket->getAllTickets();
-            foreach($ticket_list as $ticket_detail){
-            ?> 
-          <tr>
-            <td><?=$ticket_detail['ticket_id']?></td>
-            <td><?=$ticket_detail['ticket_name']?></td>
-            <td>
-              <img src="../uploads/<?= $ticket_detail['ticket_img_home']?>" alt="" class="img-thumbnail w-50">
-            </td>
-            <td>
-            <img src="../uploads/<?= $ticket_detail['ticket_img_away']?>" alt="" class="img-thumbnail w-50">
-            </td>
-            <td><?=$ticket_detail['ticket_date']?></td>
-            <td><?=$ticket_detail['ticket_category']?></td>
-            <td>$<?=$ticket_detail['ticket_price']?></td>
-            <td><a href="buyTicket.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-danger" role="button">Buy</a></td>
-          </tr>
-          <?php
-            }
-          ?>
-        </tbody>
-      </table>
-    </div>
+  <div class="container mt-5 py-5">
+    <h3 class="display-4 text-center mt-5">THANK YOU FOR YOUR PURCHACE, <?= $_SESSION['username']?>!!</h3>
+    <h3 class="display-4 text-center">YOUR ORDER IS CONFIRMED.</h3>
   </div>
+  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+

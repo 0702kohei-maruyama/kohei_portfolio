@@ -11,7 +11,7 @@
       if($result == false){
         die ("CANNOT CREATE NEW USER: " . $this->conn->error);
       }else{
-        header("Location: ../views/login.php");
+        header("Location: ../views/index.php");
       }
     }
     
@@ -24,9 +24,17 @@
         return $result->fetch_assoc();
       }else{
         return false;
-      }
+      }    
+    }
 
-      
+    public function getUser($user_id){
+      $sql = "SELECT * FROM users WHERE user_id = $user_id";
+
+      $result = $this->conn->query($sql);
+
+      if($result == false){
+        die("CANNOT GET USER INFORMATION:" . $this->conn->error);
+      }
     }
   }
 ?>

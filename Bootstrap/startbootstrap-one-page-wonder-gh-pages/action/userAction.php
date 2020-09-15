@@ -2,10 +2,12 @@
   require_once '../class/User.php';
   require_once '../class/Ticket.php';
   require_once '../class/Picture.php';
+  require_once '../class/Order.php';
 
   $user = new User();
   $ticket = new Ticket();
   $picture_object = new Picture();
+  $order = new Order();
   session_start();
 
   if(isset($_POST['btnRegister'])){
@@ -37,7 +39,7 @@
       $_SESSION['passw'] = $login['passw'];
 
       if($_SESSION['role'] == "U"){
-        header("Location: ../homepage.php");
+        header("Location: ../views/homepage.php");
       }elseif($_SESSION['role'] == "A"){
         header("Location: ../views/addTicket.php");
       }
@@ -85,21 +87,6 @@
     }else{
       echo "Error in Uploading the picture.";
     }
-  }elseif(isset($_POST['Buy'])){
-    $orderQuantity = $_POST['orderQuantity'];
-    $ticketName = $_POST['ticketName'];
-    $ticketPrice = $_POST['ticketPrice'];
-    $ticketQuatitiy = $_POST['ticketQuatitiy'];
-    $ticket_id = $_POST['ticketID'];
-    $user_id = $_SESSION['user_id'];
-
-    $newQuantity = $ticketQuatitiy - $orderQuantity;
-    if($orderQuantity > $ticketQuatitiy){
-      echo "We cannot accept your order.";
-    }else{
-      $ticket->updateTicket($orderQuantity, $ticket_id, $newQuantity);
-      $order->createOrder($orderQuantity, $user_id, $ticket_id);
-    }
   }elseif(isset($_POST['btnBuy'])){
     $ticket_id = $_POST['ticketID'];
     $ticketName = $_POST['ticketName'];
@@ -108,17 +95,20 @@
     $ticketQuatitiy = $_POST['ticketQuatitiy'];
     $orderQuantity = $_POST['orderQuantity'];
     $orderChild = $_POST['orderChild'];
+    $user_id = $_SESSION['user_id'];
 
     $orderAdult = $orderQuantity - $orderChild;
     $priceChild = $orderChild * $ticketPrice / 2;
     $priceAdult = $orderAdult * $ticketPrice;
     $totalPrice = $priceChild + $priceAdult;
 
+    $newQuantity = $ticketQuatitiy - $orderQuantity;
+
     if($orderQuantity > $ticketQuatitiy){
-      echo "Your order is not accetpable.";
+      echo "We cannot accept your order.";
     }else{
-      $order->showOrder($ticket_id);
-      header("Location: ../views/confirmOrder.php");
+      $order->createOrder($user_id, $ticket_id, $orderChild, $orderQuantity, $totalPrice);
+      $ticket->updateTicket($newQuantity, $ticket_id, $ticketName);
     }
 
   }
