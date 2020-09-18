@@ -22,31 +22,7 @@
   <link href="../css/one-page-wonder.min.css" rel="stylesheet">
 </head>
 <body>
-
-  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="index.php">Buy E-Ticket</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="register.php">
-              <i class="fas fa-user-plus"></i>  
-              Sign Up
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="index.php">
-              <i class="fas fa-sign-in-alt"></i>
-              Log In
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <?php include "loginMenu.php" ?>
 
   <div class="container mt-5 text-center">
     <div class="card mx-auto my-5 w-50 border border-0">

@@ -24,24 +24,13 @@
   <link href="../css/one-page-wonder.min.css" rel="stylesheet">
 </head>
 <body>
-
-  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="homepage.php">Buy E-Ticket</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="logout.php">
-              <i class="fas fa-sign-out-alt fa-lg"></i> Log Out
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <?php
+    if($_SESSION['role'] == "A"){
+      include "adminMenu.php";
+    }else{
+      include "userMenu.php";
+    }
+  ?>
   
   <div class="container">
     <div class="card mx-auto w-50 my-5 border border-0">
@@ -99,7 +88,9 @@
       $priceAdult = $orderAdult * $ticketPrice;
       $totalPrice = $priceChild + $priceAdult;
 
-      if($orderQuantity > $ticketQuatitiy){
+      if($orderQuantity < $orderChild){
+        echo "<h3 class='text-center mt-3'>We cannot accept your order.</h3>";
+      }elseif($orderQuantity > $ticketQuatitiy){
         echo "<h3 class='text-center mt-3'>We cannot accept your order.</h3>";
       }else{
 
@@ -108,7 +99,7 @@
       echo "<p class='h3col-md-6 text-center display-4'>$$totalPrice</p>";
       echo "</div>";
       ?>
-      <form action="../action/userAction.php" method="post">
+      <form action="payment.php" method="post">
         <input type="hidden" name="ticketID"  value="<?=$ticket_details['ticket_id']?>">
         <input type="hidden" name="ticketName"  value="<?=$ticket_details['ticket_name']?>">
         <input type="hidden" name="ticketCategory"  value="<?=$ticket_details['ticket_category']?>">
@@ -118,16 +109,15 @@
         <input type="hidden" name="orderChild" value="<?=$orderChild?>">
         <input type="hidden" name="totalPrice" value="<?=$totalPrice?>">
 
-        <div class="form-row">
-          <a href="shop.php" class="btn btn-success btn-block col-mb-6">Cancel</a>
-          <button type="submit" name="btnBuy" class="btn btn-danger btn-block col-mb-6">Buy</button>
-        </div>
+        <button type="submit" name="btnBuy" class="btn btn-danger btn-block">Buy</button>
           
       </form>
       <?php
     }
   }
 ?>
+
+      <a href="shop.php" class="btn btn-success btn-block col-mb-6 mt-2">Cancel</a>
         
       </div>
     </div>

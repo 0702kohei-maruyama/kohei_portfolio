@@ -16,7 +16,7 @@
     }
     
     public function login($username, $email, $passw){
-      $sql = "SELECT * FROM users WHERE email = '$email' AND username = '$username'";
+      $sql = "SELECT * FROM users WHERE email = '$email' AND username = '$username' AND password ='$passw'";
 
       $result = $this->conn->query($sql);
 
@@ -28,12 +28,26 @@
     }
 
     public function getUser($user_id){
-      $sql = "SELECT * FROM users WHERE user_id = $user_id";
+      $sql = "SELECT * FROM users WHERE user_id = '$user_id'";
+
+      $result = $this->conn->query($sql);
+
+      if($result->num_rows == 1){
+        return $result->fetch_assoc();
+      }else{
+        die("CANNOT GET USER INFORMATION:" . $this->conn->error);
+      }
+    }
+
+    public function updateUser($user_id, $firstName, $lastName, $username, $email, $contactNum, $address, $passw  ){
+      $sql = "UPDATE users SET first_name = '$firstName', last_name = '$lastName', username = '$username', email = '$email', contact_number = '$contactNum', address ='$address' WHERE user_id = '$user_id' AND password = '$passw'";
 
       $result = $this->conn->query($sql);
 
       if($result == false){
-        die("CANNOT GET USER INFORMATION:" . $this->conn->error);
+        die("CANNNOT UPDATE: ". $this->conn->error);
+      }else{
+        header("Location: ../views/editUser.php");
       }
     }
   }

@@ -23,23 +23,14 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="homepage.php">Buy E-Ticket</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="logout.php">
-              <i class="fas fa-sign-out-alt fa-lg"></i> Log Out
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <?php
+    if($_SESSION['role'] == "A"){
+      include "adminMenu.php";
+    }else{
+      include "userMenu.php";
+    }
+  ?>
+  
   <div class="container mt-5 py-5">
     <h3 class="display-4 text-center mt-5">THANK YOU FOR YOUR PURCHACE, <?= $_SESSION['username']?>!!</h3>
     <h3 class="display-4 text-center">YOUR ORDER IS CONFIRMED.</h3>

@@ -28,23 +28,13 @@
 <body>
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">Buy e-Ticket</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="logout.php">
-            <i class="fas fa-sign-out-alt fa-lg"></i> Log Out
-          </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <?php
+    if($_SESSION['role'] == "A"){
+      include "adminMenu.php";
+    }else{
+      include "userMenu.php";
+    }
+  ?>
 
   <header class="masthead text-center text-white">
     <div class="masthead-content">
@@ -99,6 +89,18 @@
               View
             </a>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="aboutUs" class="bg-light">
+    <h3 class="text-center p-3">About Us</h3>
+
+    <div class="container my-3">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex eos minus aliquam, suscipit non neque placeat voluptas incidunt magnam quas pariatur laboriosam, eius nam est, sapiente fuga ducimus dolor. Aspernatur, molestiae voluptatum doloremque recusandae quaerat eum adipisci tenetur praesentium inventore mollitia delectus nam. Minus, laudantium? Error nemo quam obcaecati illo deleniti, aspernatur fugit reprehenderit quas ab delectus, beatae nostrum eveniet cupiditate sequi odit animi ad ducimus tenetur magnam necessitatibus id? Quae eius consequatur recusandae alias repellendus aperiam corrupti facere, veniam culpa minima mollitia voluptas dolore fugiat. Corporis quis magnam laudantium aut! Omnis, consequuntur sint eius enim voluptatum vitae ut dolorum?
         </div>
       </div>
     </div>

@@ -1,5 +1,9 @@
 <?php
   include '../action/userAction.php';
+  if(!$_SESSION['user_id']){
+    header("location: ../views/logout.php");
+    exit;
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,23 +26,13 @@
   <link href="../css/one-page-wonder.min.css" rel="stylesheet">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="homepage.php">BUY E-TICKET</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="logout.php">
-            <i class="fas fa-sign-out-alt fa-lg"></i> Log Out</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
+  <?php
+    if($_SESSION['role'] == "A"){
+      include "adminMenu.php";
+    }else{
+      include "userMenu.php";
+    }
+  ?>
   <div class="container">
     <div class="container my-5 text-center">
       <h2 class="display-3 p-4">View All Ticket</h2>

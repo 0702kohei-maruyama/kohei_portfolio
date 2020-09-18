@@ -25,7 +25,7 @@
     $email = $_POST['email'];
     $passw = md5($_POST['passw']);
 
-    $login = $user->login($username, $email, $password);
+    $login = $user->login($username, $email, $passw);
 
     if($login){
       $_SESSION['user_id'] = $login['user_id'];
@@ -33,10 +33,11 @@
       $_SESSION['last_name'] = $login['last_name'];
       $_SESSION['username'] = $login['username'];
       $_SESSION['email'] = $login['email'];
-      $_SESSION['contactNum'] = $login['contactNum'];
+      $_SESSION['contact_number'] = $login['contact_number'];
       $_SESSION['address'] = $login['address'];
       $_SESSION['role'] = $login['role'];
-      $_SESSION['passw'] = $login['passw'];
+      $_SESSION['password'] = $login['passw'];
+      $_SESSION['ticket_id'] = 0;
 
       if($_SESSION['role'] == "U"){
         header("Location: ../views/homepage.php");
@@ -87,6 +88,17 @@
     }else{
       echo "Error in Uploading the picture.";
     }
+  }elseif(isset($_POST['btnUpdate'])){
+    $user_id = $_SESSION['user_id'];
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $contactNum = $_POST['contactNum'];
+    $address = $_POST['address'];
+    $passw = md5($_POST['passw']);
+    
+    $user->updateUser($user_id, $firstName, $lastName, $username, $email, $contactNum, $address, $passw );
   }elseif(isset($_POST['btnBuy'])){
     $ticket_id = $_POST['ticketID'];
     $ticketName = $_POST['ticketName'];
@@ -107,9 +119,48 @@
     if($orderQuantity > $ticketQuatitiy){
       echo "We cannot accept your order.";
     }else{
-      $order->createOrder($user_id, $ticket_id, $orderChild, $orderQuantity, $totalPrice);
-      $ticket->updateTicket($newQuantity, $ticket_id, $ticketName);
-    }
+      $_SESSION['ticket_id'] = $ticket_id;
+      $_SESSION['ticketName'] = $ticketName;
+      $_SESSION['category'] = $ticketCategory;
+      $_SESSION['price'] = $ticketPrice;
+      $_SESSION['ticket_quantity'] = $ticketQuantity;
+      $_SESSION['order_quantity'] = $orderQuantity;
+      $_SESSION['order_child'] = $orderChild;
+      $_SESSION['price_child'] = $priceChild;
+      $_SESSION['order_adult'] = $orderAdult;
+      $_SESSION['price_adult'] = $priceAdult;
+      $_SESSION['total'] = $totalPrice;
 
+      header("Location: ../views/payment.php");
+    }
+  }elseif(isset($_POST['btnClearCart'])){
+      $_SESSION['ticket_id'] = 0;
+
+      header("Location: ../views/shopCart.php");
+  }elseif(isset($_POST['btnConfirm'])){
+      $user_id = $_SESSION['user_id'];
+      $ticket_id = $_SESSION['ticket_id'];
+      $ticket_name = $_SESSION['ticketName'];
+      $ticketQuantity = $_SESSION['ticket_quantity'];
+      $orderQuantity = $_SESSION['order_quantity'];
+      $orderChild = $_SESSION['order_child'];
+      $totalPrice = $_SESSION['total'];
+      $cardNum = $_POST['cardNum'];
+      $ccMonth = $_POST['ccMonth'];
+      $ccYear = $_POST['ccYear'];
+      $pinCode = $_POST['pinCode'];
+      $receiverFirstName = $_POST['firstName'];
+      $receiverLastName = $_POST['lastName'];
+      $receiverAddress = $_POST['address'];
+      $contactNum = $_POST['contactNum'];
+
+      $newQuantity = $ticketQuantity - $orderQuantity;
+
+      $order->createOrder($user_id, $ticket_id, $orderChild, $orderQuantity, $totalPrice, $receiverFirstName, $receiverLastName, $receiverAddress, $contactNum, $cardNum, $ccMonth, $ccYear, $pinCode);
+
+      $ticket->updateTicket($newQuantity, $ticket_id, $ticketName);
+
+      $_SESSION['ticket_id'] = 0;
   }
+  
 ?>
