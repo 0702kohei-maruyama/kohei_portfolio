@@ -3,8 +3,8 @@
   require_once 'Database.php';
 
   class Picture extends Database{
-    public function insertHomeImgToTable($picHome, $ticket_id){
-      $sql = "UPDATE tickets SET ticket_img_home = '$picHome' WHERE ticket_id = '$ticket_id'";
+    public function insertImg($picHome, $picAway, $ticket_id){
+      $sql = "UPDATE tickets SET ticket_img_home = '$picHome', ticket_img_away = '$picAway' WHERE ticket_id = '$ticket_id'";
 
       if($this->conn->query($sql)){
         return 1;
@@ -23,7 +23,9 @@
       }
     }
 
-
+    public function deleteImg($ticket_id, $imgHome, $imgAway){
+      $sql ="DELETE ticket_img_home  FROM tickets WHERE  ";
+    }
   }
   
 ?>

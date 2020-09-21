@@ -1,6 +1,7 @@
 <?php
   include '../action/userAction.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -236,6 +237,12 @@
     <div class="form-row justify-content-center">
       <button type="submit" name="btnConfirm" class="btn btn-danger btn-block col-md-6">Confirm</button>
     </div>
+
+    <div class="container w-50 mx-auto mb-5">
+    <div class="row">
+      <a href="buyTicket.php?ticket_id=<?=$_SESSION['ticket_id']?>" class="btn btn-success btn-block">Back</a>
+    </div>
+  </div>
   </form> 
   
 

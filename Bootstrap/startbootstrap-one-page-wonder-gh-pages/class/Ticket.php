@@ -102,11 +102,13 @@
 
       if($result == false){
         die("Cannot Delete: ".$this->conn->error);
+      }else{
+        header ("Location: ../views/addTicket.php");
       }
     }
 
-    public function updateTicket($newQuantity, $ticket_id, $ticketName){
-      $sql = "UPDATE tickets SET ticket_quantity = '$newQuantity' WHERE ticket_id = '$ticket_id' AND ticket_name = '$ticketName'";
+    public function updateTicket($newQuantity, $ticket_id){
+      $sql = "UPDATE tickets SET ticket_quantity = '$newQuantity' WHERE ticket_id = '$ticket_id'";
 
       $result = $this->conn->query($sql);
 

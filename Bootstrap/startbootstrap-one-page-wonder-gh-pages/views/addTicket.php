@@ -32,7 +32,7 @@
   <div class="container text-center mt-5">
     <div class="card mx-auto my-5 w-50 border border-0">
       <div class="card-header bg-white text-danger border-0">
-        <h2 class="display-4">Add Ticket</h2>
+        <h2 class="display-4 pt-4">Add Ticket</h2>
       </div>
 
       <div class="card-body">
@@ -81,7 +81,7 @@
       </div>
     </div>
   </div>
-
+  
   <div class="container">
     <div class="container text-center">
       <h2 class="display-3"></h2>
@@ -97,6 +97,7 @@
         <th>PRICE</th>
         <th>QUANTITY</th>
         <th>ADD PICTURES</th>
+        <th></th>
       </thead>
       <tbody>
           <?php
@@ -108,19 +109,34 @@
           <td><?=$ticket_detail['ticket_name']?></td>
           <td>
             <img src="../uploads/<?= $ticket_detail['ticket_img_home']?>" alt="" class="img-thumbnail w-50">
+            <br>
+            <form action="../action/userAction.php" method="post">
+              <input type="hidden" name="imgHome" value="<?= $ticket_detail['ticket_img_home']?>">
+              <input type="hidden" name="ticket_id" value="<?=$ticket_detail['ticket_id']?>">
+              <button type="submit" name="btnDeleteImg" class="btn btn-success">delete</button>
+            </form>
           </td>
           <td>
-          <img src="../uploads/<?= $ticket_detail['ticket_img_away']?>" alt="" class="img-thumbnail w-50">
+            <img src="../uploads/<?= $ticket_detail['ticket_img_away']?>" alt="" class="img-thumbnail w-50">
+            <br>
+            <form action="../action/userAction.php" method="post">
+              <input type="hidden" name="imgAway" value="<?= $ticket_detail['ticket_img_away']?>">
+              <input type="hidden" name="ticket_id" value="<?=$ticket_detail['ticket_id']?>">
+              <button type="submit" name="btnDeleteImg" class="btn btn-success">delete</button>
+            </form>
           </td>
           <td><?=$ticket_detail['ticket_date']?></td>
           <td><?=$ticket_detail['ticket_category']?></td>
           <td>$<?=$ticket_detail['ticket_price']?></td>
           <td><?=$ticket_detail['ticket_quantity']?></td>
           <td><a href="pictureUpload.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-danger" role="button">ADD</a></td>
+          <td><a href="deleteTicket.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-warning" role="button">Delete</a></td>
         </tr>
         <?php
           }
         ?>
+  </div>
+  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>

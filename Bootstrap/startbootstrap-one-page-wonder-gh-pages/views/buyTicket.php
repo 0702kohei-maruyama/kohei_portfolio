@@ -58,7 +58,7 @@
             <input type="hidden" name="ticketName"  value="<?=$ticket_details['ticket_name']?>">
             <input type="hidden" name="ticketCategory"  value="<?=$ticket_details['ticket_category']?>">
             <input type="hidden" name="ticketPrice"  value="<?=$ticket_details['ticket_price']?>">
-            <input type="hidden" name="ticketQuatitiy"  value="<?=$ticket_details['ticket_quantity']?>">
+            <input type="hidden" name="ticketQuantity"  value="<?=$ticket_details['ticket_quantity']?>">
             <input type="number" name="orderQuantity" class="form-control mt-2 text-center w-50 float-right border" required>
           </div>
 
@@ -78,7 +78,7 @@
       $ticketName = $_POST['ticketName'];
       $ticketCategory = $_POST['ticketCategory'];
       $ticketPrice = $_POST['ticketPrice'];
-      $ticketQuatitiy = $_POST['ticketQuatitiy'];
+      $ticketQuantity = $_POST['ticketQuantity'];
       $orderQuantity = $_POST['orderQuantity'];
       $orderChild = $_POST['orderChild'];
       $user_id = $_SESSION['user_id'];
@@ -90,7 +90,7 @@
 
       if($orderQuantity < $orderChild){
         echo "<h3 class='text-center mt-3'>We cannot accept your order.</h3>";
-      }elseif($orderQuantity > $ticketQuatitiy){
+      }elseif($orderQuantity > $ticketQuantity){
         echo "<h3 class='text-center mt-3'>We cannot accept your order.</h3>";
       }else{
 
@@ -104,7 +104,7 @@
         <input type="hidden" name="ticketName"  value="<?=$ticket_details['ticket_name']?>">
         <input type="hidden" name="ticketCategory"  value="<?=$ticket_details['ticket_category']?>">
         <input type="hidden" name="ticketPrice"  value="<?=$ticket_details['ticket_price']?>">
-        <input type="hidden" name="ticketQuatitiy"  value="<?=$ticket_details['ticket_quantity']?>">
+        <input type="hidden" name="ticketQuantity"  value="<?=$ticket_details['ticket_quantity']?>">
         <input type="hidden" name="orderQuantity" value="<?=$orderQuantity?>">
         <input type="hidden" name="orderChild" value="<?=$orderChild?>">
         <input type="hidden" name="totalPrice" value="<?=$totalPrice?>">

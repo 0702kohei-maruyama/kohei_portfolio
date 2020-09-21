@@ -45,6 +45,7 @@
           <th>DATE</th>
           <th>CATEGORY</th>
           <th>PRICE</th>
+          <th>REMAINING</th>
           <th></th>
         </thead>
         <tbody>
@@ -56,14 +57,32 @@
             <td><?=$ticket_detail['ticket_id']?></td>
             <td><?=$ticket_detail['ticket_name']?></td>
             <td>
-              <img src="../uploads/<?= $ticket_detail['ticket_img_home']?>" alt="" class="img-thumbnail w-50">
+              <img src="../uploads/<?= $ticket_detail['ticket_img_home']?>" alt="" class="img-thumbnail w-25">
             </td>
             <td>
-            <img src="../uploads/<?= $ticket_detail['ticket_img_away']?>" alt="" class="img-thumbnail w-50">
+            <img src="../uploads/<?= $ticket_detail['ticket_img_away']?>" alt="" class="img-thumbnail w-25">
             </td>
             <td><?=$ticket_detail['ticket_date']?></td>
             <td><?=$ticket_detail['ticket_category']?></td>
             <td>$<?=$ticket_detail['ticket_price']?></td>
+            <td>
+              <?php
+                if($ticket_detail['ticket_quantity'] > 30){
+                  echo "<span class='bold'>○</span>";
+                }elseif($ticket_detail['ticket_quantity'] < 30 && $ticket_detail['ticket_quantity'] > 0){
+
+                  echo "<span class='text-success'>△</span>";
+                  echo "<br>";
+                  echo "<span class='text-success'>";
+                  echo $ticket_detail['ticket_quantity'] , " tickets remaining";
+                  echo "</span>";
+                }elseif($ticket_detail['ticket_quantity'] == '0'){
+                  echo "<span class='text-danger'>✖︎</span>";
+                  echo "<br>";
+                  echo "SOLD OUT";
+                }
+              ?>
+            </td>
             <td><a href="buyTicket.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-danger" role="button">Buy</a></td>
           </tr>
           <?php

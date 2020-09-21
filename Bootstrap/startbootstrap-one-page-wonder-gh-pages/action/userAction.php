@@ -56,18 +56,21 @@
 
     $ticket->addTicket($ticketName, $ticketDate, $ticketCategory, $ticketPrice, $ticketQuantity);
 
-  }elseif(isset($_POST['uploadHome'])){
+  }elseif(isset($_POST['uploadImg'])){
     $picHome = $_FILES['imgHome']['name'];
+    $picAway = $_FILES['imgAway']['name'];
     $ticket_id = $_POST['ticketID'];
 
     $target_dir = "../uploads/"; 
 
-    $target_file = $target_dir . basename($_FILES['imgHome']['name']);
+    $target_file1 = $target_dir . basename($_FILES['imgHome']['name']);
+    $target_file2 = $target_dir . basename($_FILES['imgAway']['name']);
 
-    $result = $picture_object->insertHomeImgToTable($picHome, $ticket_id);
+    $result = $picture_object->insertImg($picHome, $picAway, $ticket_id);
 
     if($result == 1){
       move_uploaded_file($_FILES['imgHome']['tmp_name'], $target_file);
+      move_uploaded_file($_FILES['imgAway']['tmp_name'], $target_file); 
       header("Location: ../views/addTicket.php");
     }else{
       echo "Error in Uploading the picture.";
@@ -104,7 +107,7 @@
     $ticketName = $_POST['ticketName'];
     $ticketCategory = $_POST['ticketCategory'];
     $ticketPrice = $_POST['ticketPrice'];
-    $ticketQuatitiy = $_POST['ticketQuatitiy'];
+    $ticketQuantity = $_POST['ticketQuantity'];
     $orderQuantity = $_POST['orderQuantity'];
     $orderChild = $_POST['orderChild'];
     $user_id = $_SESSION['user_id'];
@@ -114,9 +117,9 @@
     $priceAdult = $orderAdult * $ticketPrice;
     $totalPrice = $priceChild + $priceAdult;
 
-    $newQuantity = $ticketQuatitiy - $orderQuantity;
+    $newQuantity = $ticketQuantity - $orderQuantity;
 
-    if($orderQuantity > $ticketQuatitiy){
+    if($orderQuantity > $ticketQuantity){
       echo "We cannot accept your order.";
     }else{
       $_SESSION['ticket_id'] = $ticket_id;
@@ -158,9 +161,18 @@
 
       $order->createOrder($user_id, $ticket_id, $orderChild, $orderQuantity, $totalPrice, $receiverFirstName, $receiverLastName, $receiverAddress, $contactNum, $cardNum, $ccMonth, $ccYear, $pinCode);
 
-      $ticket->updateTicket($newQuantity, $ticket_id, $ticketName);
+      $ticket->updateTicket($newQuantity, $ticket_id);
 
       $_SESSION['ticket_id'] = 0;
+  }elseif(isset($_POST['btnDeleteImg'])){
+    $ticket_id = $_POST['ticket_id'];
+    $imgHome = $_POST['imgHome'];
+    $imgAway = $_POST['imgAway'];
+
+    $ticket->deleteImg($ticket_id, $imgHome, $imgAway);
   }
+
+
+  // $order->createOrder($user_id, $ticket_id, $orderChild, $orderQuantity, $totalPrice, $receiverFirstName, $receiverLastName, $receiverAddress, $contactNum, $cardNum, $ccMonth, $ccYear, $pinCode);
   
 ?>

@@ -114,39 +114,41 @@
           <?php
             $order_list = $order->getOrder($user_id);
             foreach($order_list as $order_details){
+              // print_r($order_details);
           ?>
             <div class="container">
               <div class="row">
                 <p class="col-md-6">Ticket Name:</p>
-                <p class="col-md-6"><?$order_details['ticket_name']?></p>
+                <p class="col-md-6 text-center"><?=$order_details['ticket_name']?></p>
               </div>
 
               <div class="row">
                 <p class="col-md-6">Category:</p>
-                <p class="col-md-6"><?$order_details['ticket_category']?></p>
+                <p class="col-md-6 text-center"><?=$order_details['ticket_category']?></p>
               </div>
 
               <div class="row">
                 <p class="col-md-6">Unit Price:</p>
-                <p class="col-md-6"><?$order_details['ticket_price']?></p>
+                <p class="col-md-6 text-center"><?=$order_details['ticket_price']?></p>
               </div>
 
               <div class="row">
                 <p class="col-md-6">Order Quantity:</p>
-                <p class="col-md-6"><?$order_details['ticket_quantity']?></p>
+                <p class="col-md-6 text-center"><?=$order_details['order_quantity']?></p>
               </div>
 
               <div class="row">
                 <p class="col-md-6">Child:</p>
-                <p class="col-md-6"><?$order_details['ticket_child']?></p>
+                <p class="col-md-6 text-center"><?=$order_details['order_child']?></p>
               </div>
 
               <div class="row">
                 <p class="col-md-6">Total:</p>
-                <p class="col-md-6">$<?$order_details['ticket_total']?></p>
+                <p class="col-md-6 text-center">$<?=$order_details['total_price']?></p>
               </div>
 
             </div>
+            <br>
           <?php
             }
           ?>
