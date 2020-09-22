@@ -118,5 +118,75 @@
         header("Location: ../views/confirmed.php");
       }
     }
+
+    public function insertAwayImgToTable($picAway, $ticket_id){
+      $sql = "UPDATE tickets SET ticket_img_away = '$picAway' WHERE ticket_id = '$ticket_id'";
+
+      if($this->conn->query($sql)){
+        return 1;
+      }else{
+        die("No Img Found: ".$this->conn->error);
+      }
+    }
+
+    public function deleteImgHome($ticket_id, $imgHome){
+      $sql ="UPDATE tickets SET ticket_img_home = ' ' WHERE ticket_id = '$ticket_id'";
+
+      $result = $this->conn->query($sql);
+
+      if($result == false){
+        die("CANNOT DELETE IMG: " . $this->conn->error);
+      }else{
+        header("Location: ../views/addTicket.php");
+      }
+    }
+
+    public function deleteImgAway($ticket_id, $imgAway){
+      $sql ="UPDATE tickets SET ticket_img_away = ' ' WHERE ticket_id = '$ticket_id'";
+      $result = $this->conn->query($sql);
+
+      if($result == false){
+        die("CANNOT DELETE IMG: " . $this->conn->error);
+      }else{
+        header("Location: ../views/addTicket.php");
+      }
+
+    }
+
+    public function getImgName($ticket_id){
+      $sql = "SELECT * FROM tickets WHERE ticket_id = '$ticket_id'";
+      $result = $this->conn->query($sql);
+
+      if($result->num_rows == 1){
+        return $result->fetch_assoc();
+      }else{
+        die("CANNOT GET IMG Name:" . $this->conn->error);
+      }
+    }
+
+    public function getTicket($ticket_id){
+      $sql = "SELECT * FROM tickets WHERE ticket_id = '$ticket_id'";
+      $result = $this->conn->query($sql);
+
+      if($result->num_rows == 1){
+        return $result->fetch_assoc();
+      }else{
+        die("CANNOT GET TICKET DETAILS:" . $this->conn->error);
+      }
+    }
+
+    public function updateTicketDetails($ticketName, $ticketDate, $ticketCategory, $ticketPrice, $ticketQuantity, $ticket_id){
+      $sql = "UPDATE tickets SET ticket_name = '$ticketName', ticket_date = '$ticketDate', ticket_category = '$ticketCategory', ticket_price = '$ticketPrice', ticket_quantity = '$ticketQuantity' WHERE ticket_id = '$ticket_id'";
+
+      $result = $this->conn->query($sql);
+
+      if($result == false){
+        die("CANNOT UPDATED: " . $this->conn->error);
+      }else{
+        header("Location: ../views/addTicket.php");
+      }
+
+    }
+
   }
 ?>

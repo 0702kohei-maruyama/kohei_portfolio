@@ -82,10 +82,7 @@
     </div>
   </div>
   
-  <div class="container">
-    <div class="container text-center">
-      <h2 class="display-3"></h2>
-    </div>
+  <div class="container">  
     <table class="table table-hover table-striped table-bordered mx-auto text-center my-5">
       <thead class="thead-dark text-uppercase">
         <th>TICKET ID</th>
@@ -96,45 +93,64 @@
         <th>CATEGORY</th>
         <th>PRICE</th>
         <th>QUANTITY</th>
-        <th>ADD PICTURES</th>
         <th></th>
       </thead>
       <tbody>
           <?php
           $ticket_list = $ticket->getAllTickets();
-          foreach($ticket_list as $ticket_detail){
+          if($ticket_list){
+            foreach($ticket_list as $ticket_detail){
           ?> 
         <tr>
           <td><?=$ticket_detail['ticket_id']?></td>
           <td><?=$ticket_detail['ticket_name']?></td>
           <td>
-            <img src="../uploads/<?= $ticket_detail['ticket_img_home']?>" alt="" class="img-thumbnail w-50">
+            <img src="../uploads/<?= $ticket_detail['ticket_img_home']?>" alt="" class="img-thumbnail w-25">
             <br>
             <form action="../action/userAction.php" method="post">
+            <div class="form-row justify-content-around">
               <input type="hidden" name="imgHome" value="<?= $ticket_detail['ticket_img_home']?>">
               <input type="hidden" name="ticket_id" value="<?=$ticket_detail['ticket_id']?>">
-              <button type="submit" name="btnDeleteImg" class="btn btn-success">delete</button>
+              <a href="imgHome.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-danger col-md-5">add</a>
+              <button type="submit" name="btnDeleteImgHome" class="btn btn-success col-md-5">delete</button>
+            </div>
             </form>
           </td>
           <td>
-            <img src="../uploads/<?= $ticket_detail['ticket_img_away']?>" alt="" class="img-thumbnail w-50">
+            <img src="../uploads/<?= $ticket_detail['ticket_img_away']?>" alt="" class="img-thumbnail w-25">
             <br>
             <form action="../action/userAction.php" method="post">
+            <div class="form-row justify-content-around">
               <input type="hidden" name="imgAway" value="<?= $ticket_detail['ticket_img_away']?>">
               <input type="hidden" name="ticket_id" value="<?=$ticket_detail['ticket_id']?>">
-              <button type="submit" name="btnDeleteImg" class="btn btn-success">delete</button>
+              <a href="imgAway.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-danger col-md-5" role="button">add</a>
+              <button type="submit" name="btnDeleteImgAway" class="btn btn-success col-md-5">delete</button>
+            </div>
             </form>
           </td>
           <td><?=$ticket_detail['ticket_date']?></td>
           <td><?=$ticket_detail['ticket_category']?></td>
           <td>$<?=$ticket_detail['ticket_price']?></td>
           <td><?=$ticket_detail['ticket_quantity']?></td>
-          <td><a href="pictureUpload.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-danger" role="button">ADD</a></td>
-          <td><a href="deleteTicket.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-warning" role="button">Delete</a></td>
+          <td>
+            <a href="editTicket.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-info">Edit</a>
+            <a href="deleteTicket.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-warning" role="button">Delete</a>
+          </td>
         </tr>
         <?php
           }
+        }else{
         ?>
+            <tr>
+              <td colspan='9'>
+                No Records Found
+              </td>
+            </tr>
+        <?php
+        }
+        ?>
+      </tbody>
+    </table>
   </div>
   
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>

@@ -32,9 +32,7 @@
         }
         return $orders;
       }else{
-        echo "<h4 class='text-center'>";
-        die("No Records" . $this->conn->error);
-        echo "</h4>";
+        return false;
       }
     }
 

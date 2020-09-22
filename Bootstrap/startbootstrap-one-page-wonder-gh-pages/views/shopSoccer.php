@@ -40,7 +40,8 @@
       <tbody>
           <?php
           $ticket_list = $ticket->getSoccerTicket();
-          foreach($ticket_list as $ticket_detail){
+          if($ticket_list){
+            foreach($ticket_list as $ticket_detail){
           ?> 
         <tr>
           <td><?=$ticket_detail['ticket_id']?></td>
@@ -75,8 +76,17 @@
           <td><a href="buyTicket.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-danger" role="button">Buy</a></td>
         </tr>
         <?php
-          }
-        ?>
+              }
+            }else{
+              ?>
+              <tr>
+                <td colspan="9">
+                  <h3 class="text-center">No records found.</h3>
+                </td>
+              </tr>
+              <?php
+            }
+          ?>
       </tbody>
     </table>
   </div>

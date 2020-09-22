@@ -75,6 +75,22 @@
     }else{
       echo "Error in Uploading the picture.";
     }
+  }elseif(isset($_POST['uploadHome'])){
+    $picHome = $_FILES['imgHome']['name'];
+    $ticket_id = $_POST['ticketID'];
+
+    $target_dir = "../uploads/";
+
+    $target_file = $target_dir . basename($_FILES['imgHome']['name']);
+
+    $result = $picture_object->insertHomeImgToTable($picHome, $ticket_id);
+
+    if($result == 1){
+      move_uploaded_file($_FILES['imgHome']['tmp_name'], $target_file);
+      header("Location: ../views/addTicket.php");
+    }else{
+      echo "Error in Uploading the picture.";
+    }
   }elseif(isset($_POST['uploadAway'])){
     $picAway = $_FILES['imgAway']['name'];
     $ticket_id = $_POST['ticketID'];
@@ -164,12 +180,25 @@
       $ticket->updateTicket($newQuantity, $ticket_id);
 
       $_SESSION['ticket_id'] = 0;
-  }elseif(isset($_POST['btnDeleteImg'])){
+  }elseif(isset($_POST['btnDeleteImgHome'])){
     $ticket_id = $_POST['ticket_id'];
     $imgHome = $_POST['imgHome'];
+
+    $ticket->deleteImgHome($ticket_id, $imgHome);
+  }elseif(isset($_POST['btnDeleteImgAway'])){
+    $ticket_id = $_POST['ticket_id'];
     $imgAway = $_POST['imgAway'];
 
-    $ticket->deleteImg($ticket_id, $imgHome, $imgAway);
+    $ticket->deleteImgAway($ticket_id, $imgAway);
+  }elseif(isset($_POST['btnUpdateTicket'])){
+    $ticket_id = $_POST['ticket_id'];
+    $ticketName = $_POST['ticketName'];
+    $ticketDate = $_POST['ticketDate'];
+    $ticketCategory = $_POST['ticketCategory'];
+    $ticketPrice = $_POST['ticketPrice'];
+    $ticketQuantity = $_POST['ticketQuantity'];
+
+    $ticket->updateTicketDetails($ticketName, $ticketDate, $ticketCategory, $ticketPrice, $ticketQuantity, $ticket_id);
   }
 
 

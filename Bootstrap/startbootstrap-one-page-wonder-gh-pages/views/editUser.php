@@ -113,8 +113,9 @@
           <div class="card-body">
           <?php
             $order_list = $order->getOrder($user_id);
-            foreach($order_list as $order_details){
-              // print_r($order_details);
+            if($order_list){
+              foreach($order_list as $order_details){
+                // print_r($order_details);
           ?>
             <div class="container">
               <div class="row">
@@ -148,8 +149,13 @@
               </div>
 
             </div>
-            <br>
+            <hr>
           <?php
+              }
+            }else{
+              ?>
+              <h4 class="text-center">No Records Founds.</h4>
+              <?php
             }
           ?>
           </div>
