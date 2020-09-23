@@ -3,9 +3,9 @@
 
   class Ticket extends Database{
 
-    public function addTicket($ticketName, $ticketDate, $ticketCategory, $ticketPrice, $ticketQuantity){
+    public function addTicket($teamHome, $teamAway, $ticketDate, $venue, $ticketCategory, $ticketPrice, $ticketQuantity){
 
-      $sql = "INSERT INTO tickets (ticket_name, ticket_date, ticket_category, ticket_price, ticket_quantity) VALUES ('$ticketName', '$ticketDate', '$ticketCategory', '$ticketPrice', '$ticketQuantity')";
+      $sql = "INSERT INTO tickets (team_home, team_away, ticket_date, ticket_venue, ticket_category, ticket_price, ticket_quantity) VALUES ('$teamHome', '$teamAway', '$ticketDate', '$venue', '$ticketCategory', '$ticketPrice', '$ticketQuantity')";
 
       $result = $this->conn->query($sql);
 
@@ -175,8 +175,8 @@
       }
     }
 
-    public function updateTicketDetails($ticketName, $ticketDate, $ticketCategory, $ticketPrice, $ticketQuantity, $ticket_id){
-      $sql = "UPDATE tickets SET ticket_name = '$ticketName', ticket_date = '$ticketDate', ticket_category = '$ticketCategory', ticket_price = '$ticketPrice', ticket_quantity = '$ticketQuantity' WHERE ticket_id = '$ticket_id'";
+    public function updateTicketDetails($teamHome, $teamAway, $ticketDate, $venue, $ticketCategory, $ticketPrice, $ticketQuantity){
+      $sql = "UPDATE tickets SET team_home = '$teamHome', team_away = '$teamAway', ticket_date = '$ticketDate', ticket_venue = '$venue', ticket_category = '$ticketCategory', ticket_price = '$ticketPrice', ticket_quantity = '$ticketQuantity' WHERE ticket_id = '$ticket_id'";
 
       $result = $this->conn->query($sql);
 

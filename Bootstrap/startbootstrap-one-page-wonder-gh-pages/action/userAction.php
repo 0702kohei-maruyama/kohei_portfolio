@@ -48,13 +48,15 @@
       echo "Incorrect Username , Email and Passeword";
     }
   }elseif(isset($_POST['btnAdd'])){
-    $ticketName = $_POST['ticketName'];
+    $teamHome = $_POST['teamHome'];
+    $teamAway = $_POST['teamAway'];
     $ticketDate = $_POST['ticketDate'];
+    $venue = $_POST['venue'];
     $ticketCategory = $_POST['ticketCategory'];
     $ticketPrice = $_POST['ticketPrice'];
     $ticketQuantity = $_POST['ticketQuantity'];
 
-    $ticket->addTicket($ticketName, $ticketDate, $ticketCategory, $ticketPrice, $ticketQuantity);
+    $ticket->addTicket($teamHome, $teamAway, $ticketDate, $venue, $ticketCategory, $ticketPrice, $ticketQuantity);
 
   }elseif(isset($_POST['uploadImg'])){
     $picHome = $_FILES['imgHome']['name'];
@@ -192,13 +194,15 @@
     $ticket->deleteImgAway($ticket_id, $imgAway);
   }elseif(isset($_POST['btnUpdateTicket'])){
     $ticket_id = $_POST['ticket_id'];
-    $ticketName = $_POST['ticketName'];
+    $teamHome = $_POST['teamHome'];
+    $teamAway = $_POST['teamAway'];
     $ticketDate = $_POST['ticketDate'];
+    $venue = $_POST['venue'];
     $ticketCategory = $_POST['ticketCategory'];
     $ticketPrice = $_POST['ticketPrice'];
     $ticketQuantity = $_POST['ticketQuantity'];
 
-    $ticket->updateTicketDetails($ticketName, $ticketDate, $ticketCategory, $ticketPrice, $ticketQuantity, $ticket_id);
+    $ticket->updateTicketDetails($teamHome, $teamAway, $ticketDate, $venue, $ticketCategory, $ticketPrice, $ticketQuantity);
   }
 
 

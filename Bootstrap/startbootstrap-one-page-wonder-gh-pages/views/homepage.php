@@ -42,7 +42,7 @@
         <p class="masthead-subheading lead mb-0">Welcome <?=$_SESSION['username']?></p>
         <h1 class="masthead-heading mb-0">Buy e-Ticket</h1>
         <h2 class="masthead-subheading mb-0">You Can Buy Sport e-Ticket</h2>
-        <a href="shop.php" class="btn btn-primary btn-xl rounded-pill mt-5">
+        <a href="#buyTicket" class="btn btn-primary btn-xl rounded-pill mt-5">
           
           View All Ticket</a>
       </div>
@@ -53,9 +53,296 @@
     <div class="bg-circle-4 bg-circle"></div>
   </header>
 
-  <section>
-    <h3 class="text-center mt-3">CATEGORY</h3>
+  <section id="buyTicket">
+    <h3 class="h1 text-center mt-3 p-3">BUY TICKET</h3>
     <div class="container">
+      <ul class="nav nav-tabs w-50 mx-auto row justify-content-around">
+        <li class="nav-item">
+          <a href="#all" class="nav-link" data-toggle="tab">ALL</a>
+        </li>
+        <li class="nav-item">
+          <a href="#soccer" class="nav-link" data-toggle="tab">SOCCER</a>
+        </li>
+        <li class="nav-item">
+          <a href="#baseball" class="nav-link" data-toggle="tab">BASEBALL</a>
+        </li>
+        <li class="nav-item">
+          <a href="#basketball" class="nav-link" data-toggle="tab">BASKETBALL</a>
+        </li>
+        
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="all">
+          <div class="container my-5 text-center">
+            <table class="table table-hover table-striped table-bordered mx-auto text-center my-5">
+              <thead class="thead-dark text-uppercase">
+                <th>TICKET ID</th>
+                <th>HOME</th>
+                <th>AWAY</th>
+                <th>DATE</th>
+                <th>PRICE</th>
+                <th>REMAINING</th>
+                <th></th>
+              </thead>
+              <tbody>
+                  <?php
+                  $ticket_list = $ticket->getAllTickets();
+                  if($ticket_list){
+                    foreach($ticket_list as $ticket_detail){
+                  ?> 
+                <tr>
+                  <td><?=$ticket_detail['ticket_id']?></td>
+                  <td>
+                    <p><?=$ticket_detail['team_home']?></p>
+                    <img src="../uploads/<?= $ticket_detail['ticket_img_home']?>" alt="" class="img-thumbnail w-25">
+                  </td>
+                  <td>
+                    <p><?=$ticket_detail['team_away']?></p>
+                    <img src="../uploads/<?= $ticket_detail['ticket_img_away']?>" alt="" class="img-thumbnail w-25">
+                  </td>
+                  <td><?=$ticket_detail['ticket_date']?></td>
+                  <td>$<?=$ticket_detail['ticket_price']?></td>
+                  <td>
+                    <?php
+                      if($ticket_detail['ticket_quantity'] > 30){
+                        echo "<span class='bold'>○</span>";
+                      }elseif($ticket_detail['ticket_quantity'] < 30 && $ticket_detail['ticket_quantity'] > 0){
+
+                        echo "<span class='text-success'>△</span>";
+                        echo "<br>";
+                        echo "<span class='text-success'>";
+                        echo $ticket_detail['ticket_quantity'] , " tickets remaining";
+                        echo "</span>";
+                      }elseif($ticket_detail['ticket_quantity'] == '0'){
+                        echo "<span class='text-danger'>✖︎</span>";
+                        echo "<br>";
+                        echo "SOLD OUT";
+                      }
+                    ?>
+                  </td>
+                  <td><a href="buyTicket.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-danger" role="button">Buy</a></td>
+                </tr>
+                <?php
+                    }
+                  }else{
+                    ?>
+                    <tr>
+                      <td colspan="9">
+                        <h3 class="text-center">No records found.</h3>
+                      </td>
+                    </tr>
+                    <?php
+                  }
+                ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="soccer">
+          <div class="container">
+            <table class="table table-hover table-striped table-bordered mx-auto text-center my-5">
+              <thead class="thead-dark text-uppercase">
+                <th>TICKET ID</th>
+                <th>HOME</th>
+                <th>AWAY</th>
+                <th>DATE</th>
+                <th>PRICE</th>
+                <th>REMAINING</th>
+                <th></th>
+              </thead>
+              <tbody>
+                  <?php
+                  $ticket_list = $ticket->getSoccerTicket();
+                  if($ticket_list){
+                    foreach($ticket_list as $ticket_detail){
+                  ?> 
+                <tr>
+                  <td><?=$ticket_detail['ticket_id']?></td>
+                  <td>
+                    <p><?=$ticket_detail['team_home']?></p>
+                    <img src="../uploads/<?= $ticket_detail['ticket_img_home']?>" alt="" class="img-thumbnail w-25">
+                  </td>
+                  <td>
+                    <p><?=$ticket_detail['team_away']?></p>
+                    <img src="../uploads/<?= $ticket_detail['ticket_img_away']?>" alt="" class="img-thumbnail w-25">
+                  </td>
+                  <td><?=$ticket_detail['ticket_date']?></td>
+                  <td><?=$ticket_detail['ticket_price']?></td>
+                  <td>
+                      <?php
+                        if($ticket_detail['ticket_quantity'] > 30){
+                          echo "<span class='bold'>○</span>";
+                        }elseif($ticket_detail['ticket_quantity'] < 30 && $ticket_detail['ticket_quantity'] > 0){
+
+                          echo "<span class='text-success'>△</span>";
+                          echo "<br>";
+                          echo "<span class='text-success'>";
+                          echo $ticket_detail['ticket_quantity'] , " tickets remaining";
+                          echo "</span>";
+                        }elseif($ticket_detail['ticket_quantity'] == '0'){
+                          echo "<span class='text-danger'>✖︎</span>";
+                          echo "<br>";
+                          echo "SOLD OUT";
+                        }
+                      ?>
+                    </td>
+                  <td><a href="buyTicket.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-danger" role="button">Buy</a></td>
+                </tr>
+                <?php
+                      }
+                    }else{
+                      ?>
+                      <tr>
+                        <td colspan="9">
+                          <h3 class="text-center">No records found.</h3>
+                        </td>
+                      </tr>
+                      <?php
+                    }
+                  ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="baseball">
+          <div class="container my-5 text-center">
+            <table class="table table-hover table-striped table-bordered mx-auto text-center my-5">
+              <thead class="thead-dark text-uppercase">
+                <th>TICKET ID</th>
+                <th>HOME</th>
+                <th>AWAY</th>
+                <th>DATE</th>
+                <th>PRICE</th>
+                <th>REMAINING</th>
+                <th></th>
+              </thead>
+              <tbody>
+                  <?php
+                  $ticket_list = $ticket->getBaseballTicket();
+                  if($ticket_list){
+                    foreach($ticket_list as $ticket_detail){
+                  ?> 
+                <tr>
+                    <td><?=$ticket_detail['ticket_id']?></td>
+                    <td>
+                      <p><?=$ticket_detail['team_home']?></p>
+                      <img src="../uploads/<?= $ticket_detail['ticket_img_home']?>" alt="" class="img-thumbnail w-25">
+                    </td>
+                    <td>
+                      <p><?=$ticket_detail['team_away']?></p>
+                      <img src="../uploads/<?= $ticket_detail['ticket_img_away']?>" alt="" class="img-thumbnail w-25">
+                    </td>
+                    <td><?=$ticket_detail['ticket_date']?></td>
+                    <td><?=$ticket_detail['ticket_category']?></td>
+                    <td>$<?=$ticket_detail['ticket_price']?></td>
+                    <td>
+                      <?php
+                        if($ticket_detail['ticket_quantity'] > 30){
+                          echo "<span class='bold'>○</span>";
+                        }elseif($ticket_detail['ticket_quantity'] < 30 && $ticket_detail['ticket_quantity'] > 0){
+
+                          echo "<span class='text-success'>△</span>";
+                          echo "<br>";
+                          echo "<span class='text-success'>";
+                          echo $ticket_detail['ticket_quantity'] , " tickets remaining";
+                          echo "</span>";
+                        }elseif($ticket_detail['ticket_quantity'] == '0'){
+                          echo "<span class='text-danger'>✖︎</span>";
+                          echo "<br>";
+                          echo "SOLD OUT";
+                        }
+                      ?>
+                    </td>
+                    <td><a href="buyTicket.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-danger" role="button">Buy</a></td>
+                  </tr>
+                  <?php
+                      }
+                    }else{
+                      ?>
+                      <tr>
+                        <td colspan="9">
+                          <h3 class="text-center">No records found.</h3>
+                        </td>
+                      </tr>
+                      <?php
+                    }
+                  ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="basketball">
+          <div class="container">
+            <table class="table table-hover table-striped table-bordered mx-auto text-center my-5">
+              <thead class="thead-dark text-uppercase">
+                <th>TICKET ID</th>
+                <th>HOME</th>
+                <th>AWAY</th>
+                <th>DATE</th>
+                <th>PRICE</th>
+                <th>REMAINING</th>
+                <th></th>
+              </thead>
+              <tbody>
+                  <?php
+                  $ticket_list = $ticket->getBasketballTicket();
+                  if($ticket_list){
+                    foreach($ticket_list as $ticket_detail){
+                  ?> 
+                <tr>
+                <td><?=$ticket_detail['ticket_id']?></td>
+                    <td>
+                      <p><?=$ticket_detail['team_home']?></p>
+                      <img src="../uploads/<?= $ticket_detail['ticket_img_home']?>" alt="" class="img-thumbnail w-25">
+                    </td>
+                    <td>
+                      <p><?=$ticket_detail['team_away']?></p>
+                      <img src="../uploads/<?= $ticket_detail['ticket_img_away']?>" alt="" class="img-thumbnail w-25">
+                    </td>
+                    <td><?=$ticket_detail['ticket_date']?></td>
+                    <td><?=$ticket_detail['ticket_category']?></td>
+                    <td>$<?=$ticket_detail['ticket_price']?></td>
+                    <td>
+                      <?php
+                        if($ticket_detail['ticket_quantity'] > 30){
+                          echo "<span class='bold'>○</span>";
+                        }elseif($ticket_detail['ticket_quantity'] < 30 && $ticket_detail['ticket_quantity'] > 0){
+
+                          echo "<span class='text-success'>△</span>";
+                          echo "<br>";
+                          echo "<span class='text-success'>";
+                          echo $ticket_detail['ticket_quantity'] , " tickets remaining";
+                          echo "</span>";
+                        }elseif($ticket_detail['ticket_quantity'] == '0'){
+                          echo "<span class='text-danger'>✖︎</span>";
+                          echo "<br>";
+                          echo "SOLD OUT";
+                        }
+                      ?>
+                    </td>
+                    <td><a href="buyTicket.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-danger" role="button">Buy</a></td>
+                </tr>
+                <?php
+                      }
+                    }else{
+                      ?>
+                      <tr>
+                        <td colspan="9">
+                          <h3 class="text-center">No records found.</h3>
+                        </td>
+                      </tr>
+                      <?php
+                    }
+                  ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <!-- <div class="container">
       <div class="row justify-content-between">
         <div class="col-lg-4">
           <div class="p-5">
@@ -91,10 +378,28 @@
           </div>
         </div>
       </div>
+    </div> -->
+  </section>
+
+  <section  class="bg-light">
+    <h3 class="h1 text-center p-3 mt-3">RECOMMENDED</h3>
+    <div class="container">
+      <div class="carousel slide" id="pickUp" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#pickUp" data-slide-to="0" class="active"></li>
+          <li data-target="#pickUp" data-slide-to="1"></li>
+          <li data-target="#pickUp" data-slide-to="2"></li>
+          <li data-target="#pickUp" data-slide-to="3"></li>
+        </ol>
+      </div>
+      <div class="caroousell-inner">
+        <div class="carousel-item active">
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="aboutUs" class="bg-light">
+  <section id="aboutUs">
     <h3 class="text-center p-3">About Us</h3>
 
     <div class="container my-3">

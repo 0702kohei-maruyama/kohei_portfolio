@@ -31,12 +31,39 @@
       include "userMenu.php";
     }
   ?>
+
+  <div class="container mt-5 pt-5 bg-light">
+    <div class="row text-center">
+      <div class="col-md-4">
+        <p>HOME</p>
+        <h1 class="h2"><?=$ticket_details['team_home']?></h1>
+        <img src="../uploads/<?= $ticket_details['ticket_img_home']?>" alt="" >
+      </div>
+      <div class="col-md-4">
+        <div style="height: 33%;">
+          <p class="h4"><?=$ticket_details['ticket_date']?></p>
+        </div>
+        <div style="height: 33%;">
+         <p class="h2">VS</p>
+        </div>
+        <div style="height: 33%;">
+         <p class="h2"><?=$ticket_details['ticket_venue']?></p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <p>AWAY</p>
+        <h1 class="h2"><?=$ticket_details['team_away']?></h1>
+        <img src="../uploads/<?= $ticket_details['ticket_img_away']?>" alt="">
+      </div>
+    </div>
+
+  </div>
   
   <div class="container">
     <div class="card mx-auto w-50 my-5 border border-0">
 
       <div class="card-header bg-white text-dark border-0">
-        <h2 class="display-4 text-center"><?=$ticket_details['ticket_name']?></h2>
+        <h2 class="display-4 text-center"><?=$ticket_details['team_home']?> vs <?=$ticket_details['team_away']?></h2>
       </div>
 
       <div class="card-body">
@@ -48,14 +75,8 @@
           </div>
 
           <div class="form-row">
-            <h3 class="text-center w-50 float-left display-4">Stock: </h3>
-            <h3 class="text-center w-50 float-right display-4"><?=$ticket_details['ticket_quantity']?></h3>
-          </div>
-
-          <div class="form-row">
             <h3 class="text-center float-left w-50 display-4">Quantity: </h3>
             <input type="hidden" name="ticketID"  value="<?=$ticket_details['ticket_id']?>">
-            <input type="hidden" name="ticketName"  value="<?=$ticket_details['ticket_name']?>">
             <input type="hidden" name="ticketCategory"  value="<?=$ticket_details['ticket_category']?>">
             <input type="hidden" name="ticketPrice"  value="<?=$ticket_details['ticket_price']?>">
             <input type="hidden" name="ticketQuantity"  value="<?=$ticket_details['ticket_quantity']?>">
@@ -75,7 +96,6 @@
         <?php
     if(isset($_POST['btnCalculate'])){
       $ticket_id = $_POST['ticketID'];
-      $ticketName = $_POST['ticketName'];
       $ticketCategory = $_POST['ticketCategory'];
       $ticketPrice = $_POST['ticketPrice'];
       $ticketQuantity = $_POST['ticketQuantity'];

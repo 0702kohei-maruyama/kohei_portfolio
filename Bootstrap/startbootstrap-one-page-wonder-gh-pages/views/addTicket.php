@@ -39,14 +39,23 @@
         <form action="../action/userAction.php" method="post">
 
           <div class="form-row">
-            <div class="form-group col-md-12 mb-4">
-              <input type="text" name="ticketName" placeholder="Ticket Name" class="form-control p-4" required>
+            <div class="form-group col-md-6 mb-4">
+              <input type="text" name="teamHome" placeholder="Home team name" class="form-control p-4" required>
+            </div>
+            <div class="form-group col-md-6 mb-4">
+              <input type="text" name="teamAway" placeholder="Away team name" class="form-control p-4" required>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group col-md-12 mb-4">
               <input type="date" name="ticketDate" placeholder="Date" class="form-control p-4" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-12 mb-4">
+              <input type="text" name="venue" placeholder="Place" class="form-control p-4" required>
             </div>
           </div>
 
@@ -85,8 +94,7 @@
   <div class="container">  
     <table class="table table-hover table-striped table-bordered mx-auto text-center my-5">
       <thead class="thead-dark text-uppercase">
-        <th>TICKET ID</th>
-        <th>NAME</th>
+        <th>ID</th>
         <th>HOME</th>
         <th>AWAY</th>
         <th>DATE</th>
@@ -103,8 +111,8 @@
           ?> 
         <tr>
           <td><?=$ticket_detail['ticket_id']?></td>
-          <td><?=$ticket_detail['ticket_name']?></td>
           <td>
+            <p><?=$ticket_detail['team_home']?></p>
             <img src="../uploads/<?= $ticket_detail['ticket_img_home']?>" alt="" class="img-thumbnail w-25">
             <br>
             <form action="../action/userAction.php" method="post">
@@ -117,6 +125,7 @@
             </form>
           </td>
           <td>
+          <p><?=$ticket_detail['team_away']?></p>
             <img src="../uploads/<?= $ticket_detail['ticket_img_away']?>" alt="" class="img-thumbnail w-25">
             <br>
             <form action="../action/userAction.php" method="post">

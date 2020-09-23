@@ -29,7 +29,7 @@
 
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="shop.php" class="nav-link">
+            <a href="homepage.php#buyTicket" class="nav-link">
               Buy Ticket
             </a>
           </li>
