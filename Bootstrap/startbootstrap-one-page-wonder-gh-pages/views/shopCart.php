@@ -1,6 +1,4 @@
-<?php
-  include '../action/userAction.php';
-?>
+<?php include '../action/userAction.php';?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,13 +26,7 @@
 <body>
 
   <!-- Navigation -->
-  <?php
-    if($_SESSION['role'] == "A"){
-      include "adminMenu.php";
-    }else{
-      include "userMenu.php";
-    }
-  ?>
+  <?php include "menubar.php"?>
 
   <div class="container w-50 px-auto my-5 pt-5">
     <div class="card">
@@ -45,7 +37,7 @@
       </div>
       <div class="card-body">
         <?php
-        if($_SESSION['ticket_id'] == "0"){
+        if(empty($_SESSION['ticket_id'])){
         ?>
          <div class="row text-center">
            <h3 class="col-md-12">
@@ -58,7 +50,7 @@
 
         <div class="row text-center">
           <p class="h3 col-md-6">Name:</p>
-          <p class="h3 col-md-6"><?=$_SESSION['ticketName']?></p>
+          <p class="h3 col-md-6"><?=$_SESSION['team_home']?> VS <?=$_SESSION['team_away']?></p>
         </div>
 
         <div class="row text-center mt-2">
@@ -67,21 +59,28 @@
         </div>
 
         <div class="row text-center mt-2">
+          <p class="h3 col-md-6">Date:</p>
+          <p class="h3 col-md-6"><?=$_SESSION['date']?></p>
+        </div>
+
+        <div class="row text-center mt-2">
           <p class="h3 col-md-6">Unit Price:</p>
           <p class="h3 col-md-6">$<?=$_SESSION['price']?></p>
         </div>
-
-        <form action="../action/userAction.php" method="post">
+        
+        <form action="" method="post">
 
           <div class="form-row text-center mt-2">
             <label for="orderQuantity" class="h3 col-md-6">Quantity:</label>
             <input type="number" name="orderQuantity" id="orderQuantity" class="form-control col-md-3 mx-auto text-center" value="<?=$_SESSION['order_quantity']?>">
 
             <input type="hidden" name="ticketID" value="<?=$_SESSION['ticket_id']?>">  
-            <input type="hidden" name="ticketName" value="<?=$_SESSION['ticketName']?>">  
+            <input type="hidden" name="team_home" value="<?=$_SESSION['team_home']?>">
+            <input type="hidden" name="team_away" value="<?=$_SESSION['team_away']?>">
+            <input type="hidden" name="date" value="<?=$_SESSION['date']?>">
             <input type="hidden" name="ticketCategory" value="<?=$_SESSION['category']?>">  
             <input type="hidden" name="ticketPrice" value="<?=$_SESSION['price']?>">  
-            <input type="hidden" name="ticketQuatitiy" value="<?$_SESSION['ticket_quantity']?>"> 
+            <input type="hidden" name="ticketQuantity" value="<?=$_SESSION['ticket_quantity']?>"> 
           </div>
 
           <div class="form-row text-center mt-2">
@@ -89,12 +88,27 @@
             <input type="number" name="orderChild" id="orderChild" class="form-control col-md-3 mx-auto text-center" value="<?=$_SESSION['order_child']?>">
           </div>
 
-          <div class="form-row justify-content-around mt-2">
+          <div class="form-row text-center mt-3">
+            <p class="col-md-6">Adult Price</p>
+            <p class="col-md-6">$<?=$_SESSION['price_adult']?></p>
+          </div>
+          <div class="form-row text-center border-bottom">
+            <p class="col-md-6">Child Price</p>
+            <p class="col-md-6">$<?=$_SESSION['price_child']?></p>
+          </div>
+          <div class="form-row text-center mt-2">
+            <h3 class="h3 col-md-6">Total Price</h3>
+            <p class="h3 col-md-6">$<?=$_SESSION['total']?></p>
+          </div>
+
+          <div class="form-row justify-content-around mt-4">
             <button type="submit" class="btn btn-danger btn-block col-md-8" name="btnBuy">Buy</button>
           </div>
+        </form>
           
+        <form action="../action/userAction.php" method="post">
           <div class="form-row justify-content-around">
-            <div class="col-md-8 text-right">
+            <div class="col-md-8 text-right mt-2">
               <button type="submit" class="btn btn-outline-primary text-primary bg-white border-0 border-bottom" name="btnClearCart">Clear Cart</button>
             </div>
           </div>
@@ -104,17 +118,26 @@
         ?>
       </div>
     </div>
+    <?php
+      if(empty($_SESSION['ticket_id'])){
+    ?>
+        <div class="row justify-content-right">
+          <div class="col-md text-right">
+            <a href="homepage.php#buyTicket" class="col-md-3">
+            <i class="fas fa-angle-double-right mr-2"></i>
+              BUY TICKET
+            </a>  
+          </div>
+        </div>
+    <?php
+      }
+    ?>
   </div>
 
 
 
-  <!-- Footer -->
-  <footer class="py-5 bg-black">
-    <div class="container">
-      <p class="m-0 text-center text-white small">Copyright &copy; Your Website 2020</p>
-    </div>
-    <!-- /.container -->
-  </footer>
+  
+  
 
   <!-- Bootstrap core JavaScript -->
   <script src="../vendor/jquery/jquery.min.js"></script>

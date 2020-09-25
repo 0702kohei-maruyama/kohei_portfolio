@@ -15,13 +15,7 @@
 <title>HOME TEAM PICTURE UPLOAD INPUT</title>
 </head>
 <body>
-<?php
-    if($_SESSION['role'] == "A"){
-      include "adminMenu.php";
-    }else{
-      include "userMenu.php";
-    }
-  ?>
+<?php include "menubar.php"?>
   <div class="container w-50 mx-auto mt-5 pt-5">
     <form action="../action/userAction.php" method="post" enctype="multipart/form-data">
       <div class="card">

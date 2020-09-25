@@ -19,7 +19,7 @@
   <link href="../css/one-page-wonder.min.css" rel="stylesheet">
 </head>
 <body>
-  <?php include "loginMenu.php" ?>
+  <?php include "menubar.php" ?>
   <div class="container mt-5 text-center">
     <div class="card mx-auto w-50 mt-5 border border-0">
       <div class="card-header bg-white text-dark border-0">
@@ -68,7 +68,7 @@
 
           <div class="form-row">
             <div class="form-group col-md-12">
-              <input type="password" name="passw" placeholder="PASSWORD" class="form-control p-4" required>
+              <input type="password" name="passw" placeholder="PASSWORD" class="form-control p-4" minlength="6" required>
             </div>
           </div>
 
@@ -80,7 +80,7 @@
 
           <div class="form-row">
             <div class="form-group col-md-12">
-              <a href="index.php" class="btn btn-sm btn-dark border-0 rounded-pill px-4 float-right">Login</a>
+              <a href="login.php" class="btn btn-sm btn-dark border-0 rounded-pill px-4 float-right">Login</a>
             </div>
           </div>
         </form>

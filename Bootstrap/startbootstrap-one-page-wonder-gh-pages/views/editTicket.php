@@ -30,13 +30,7 @@
 <body>
 
   <!-- Navigation -->
-  <?php
-    if($_SESSION['role'] == "A"){
-      include "adminMenu.php";
-    }else{
-      include "userMenu.php";
-    }
-  ?>
+  <?php include "menubar.php"?>
   
   <div class="container text-center mt-5">
     <div class="card mx-auto my-5 w-50 border border-0">
@@ -91,12 +85,14 @@
           </div>
           
           <div class="form-row">
-            <div class="form-group col-md-12 mb-4">
+            <div class="form-group col-md-12 mb-2">
               <button type="submit" name="btnUpdateTicket" class="btn btn-info btn-block  form-control text-uppercase">CHANGE</button>
             </div>
           </div>
-
         </form>
+        <div class="container text-right">
+          <a href="addTicket.php">Back to Add Ticket</a>
+        </div>
       </div>
     </div>
   </div>

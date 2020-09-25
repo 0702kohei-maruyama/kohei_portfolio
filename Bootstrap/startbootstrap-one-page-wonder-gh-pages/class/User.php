@@ -11,7 +11,15 @@
       if($result == false){
         die ("CANNOT CREATE NEW USER: " . $this->conn->error);
       }else{
-        header("Location: ../views/index.php");
+        $id = $this->conn->insert_id;
+        $sql = "INSERT INTO cards (user_id) VALUES ('$id')";
+
+        $result2 = $this->conn->query($sql);
+        if($result2 == false){
+          die ("CANNOT CREATE NEW CC: " . $this->conn->error);
+        }else{
+         header("Location: ../views/login.php");
+        }
       }
     }
     

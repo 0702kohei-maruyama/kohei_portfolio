@@ -1,7 +1,7 @@
 <?php
   include '../action/userAction.php';
+  $cards = $card->getCC($_SESSION['user_id']);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,13 +29,7 @@
 <body>
 
   <!-- Navigation -->
-  <?php
-    if($_SESSION['role'] == "A"){
-      include "adminMenu.php";
-    }else{
-      include "userMenu.php";
-    }
-  ?>
+  <?php include "menubar.php"?>
 
   <div class="container w-50 mx-auto mt-5 mb-3 pt-5">
     <div class="card">
@@ -47,12 +41,12 @@
       <div class="card-body">
         <div class="row text-center">
           <p class="h3 col-md-6">Name:</p>
-          <p class="h3 col-md-6"><?=$_SESSION['ticketName']?></p>
+          <p class="h3 col-md-6"><?=$_SESSION['team_home']?> VS <?=$_SESSION['team_away']?></p>
         </div>
 
         <div class="row text-center mt-2">
-          <p class="h3 col-md-6">Category:</p>
-          <p class="h3 col-md-6"><?=$_SESSION['category']?></p>
+          <p class="h3 col-md-6">Date:</p>
+          <p class="h3 col-md-6"><?=$_SESSION['date']?></p>
         </div>
 
         <div class="row text-center mt-2">
@@ -67,7 +61,7 @@
 
         <div class="row text-center mt-2">
           <p class="h3 col-md-6">Child:</p>
-          <p class="h3 col-md-6"><?=$_SESSION['order_child']?></p>
+          <p class="h3 col-md-6">( <?=$_SESSION['order_child']?> )</p>
         </div>
 
       </div>
@@ -95,43 +89,7 @@
     </div>
   </div>
   
-  <div class="container w-50 mx-auto my-3">
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title text-center">
-          Payment Method
-        </h3>
-      </div>
-      <div class="card-body">
-        <form action="payment.php#payment" method="post">
-
-          <div class="form-row text-center">
-            <div class="form-group col-md-6">
-              <input type="radio" name="payment" value="cash" id="payCash">
-              <label for="payCash">Cash</label>
-            </div>
-            <div class="form-group col-md-6">
-              <input type="radio" name="payment" value="cc" id="payCc">
-              <label for="payCc">Credit Card</label>
-            </div>
-          </div>
-
-          <button type="submit" name="btnOk" class="btn btn-block btn-success">ok</button>
-
-        </form>
-      </div>
-    </div>
-  </div>
-  
   <form action="../action/userAction.php" method="post" id="payment">
-    <?php
-    if(isset($_POST['btnOk'])){
-      $payment = $_POST['payment'];
-
-      if($payment == "cash"){
-
-      }elseif($payment == "cc"){
-    ?>
     <div class="container w-50 mx-auto my-3 text-center">
       <div class="card">
         <div class="card-header text-center">
@@ -140,16 +98,30 @@
           </h3>
         </div>
         <div class="card-body">
-
           <div class="form-row my-2">
             <label for="cardNum" class="col-md-4">Card Number</label>
-            <input type="number" name="cardNum" id="cardNum" class="form-control col-md-8" maxlength="16" minlength="16" required>
+            <input type="text" name="cardNum" id="cardNum" class="form-control col-md-8 px-3" maxlength="16" minlength="16" placeholder="0000 0000 0000 0000" value="<?=$cards['cc_number']?>" required>
           </div>
 
           <div class="form-row my-2">
-            <label for="" class="col-md-4">Select Valid Date</label>
-            <select name="ccMonth" id="" class="form-control col-md-4" required>
-              <option value="" hidden>MM</option>
+            <label for="ccName" class="col-md-4">Card Owner</label>
+            <input type="text" name="ccName" id="ccName" class="form-control col-md-8 px-3" placeholder="John Smith" value="<?=$cards['cc_name']?>" required>
+          </div>
+
+          <div class="form-row my-2">
+            <label for="" class="col-md-4">Card Expiry</label>
+            <select name="ccMonth" id="" class="form-control col-md-4 px-3" required>
+              <?php
+                if(empty($cards['cc_month'])){
+                  ?>
+                  <option value="" hidden>MM</option>
+                  <?php
+                }else{
+              ?>
+                  <option value="<?=$cards['cc_month']?>" hidden><?=$cards['cc_month']?></option>
+              <?php
+                }
+              ?>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -164,8 +136,18 @@
               <option value="12">12</option>
             </select>
 
-            <select name="ccYear" id="" class="form-control col-md-4" required>
-              <option value="" hidden>YYYY</option>
+            <select name="ccYear" id="" class="form-control col-md-4 px-3" required>
+            <?php
+                if(empty($cards['cc_year'])){
+                  ?>
+                  <option value="" hidden>YYYY</option>
+                  <?php
+                }else{
+              ?>
+                  <option value="<?=$cards['cc_year']?>" hidden><?=$cards['cc_year']?></option>
+              <?php
+                }
+              ?>
               <option value="2020">2020</option>
               <option value="2021">2021</option>
               <option value="2022">2022</option>
@@ -181,16 +163,19 @@
           </div>
 
           <div class="form-row my-2 justify-content-between">
-            <label for="pinCode" class="col-md-4">Pincode</label>
-            <input type="number" name="pinCode" id="pinCode" class="form-control col-md-3" maxlength="4" minlength="3" required>
+            <label for="pinCode" class="col-md-4">CVV</label>
+            <input type="text" name="pinCode" id="pinCode" class="form-control col-md-3 px-3" maxlength="3" minlength="3" placeholder="123" required>
+          </div>
+
+          <div class="form-group row mt-3 justify-content-center  text-center">
+            <div class="form-check">
+              <input type="checkbox" name="save" value="save" id="save" class="form-check-input">
+              <label for="save" class="form-check-label">Save this credit card information.</label>
+            </div>
           </div>
         </div>
       </div>    
     </div>
-    <?php
-      }
-    }
-    ?>
 
     <div class="container w-50 mx-auto my-3">
       <div class="card">
@@ -202,13 +187,13 @@
         <div class="card-body">
           <div class="form-row text-center">
             <label for="fullName" class="col-md-4">Receiver Name:</label>
-            <input type="text" name="firstName" id="fullName" class="form-control col-md-4" value="<?=$_SESSION['first_name']?>" placeholder="First Name">
-            <input type="text" name="lastName" class="form-control col-md-4" value="<?=$_SESSION['last_name']?>" placeholder="Last Name">
+            <input type="text" name="firstName" id="fullName" class="form-control col-md-4 text-center" value="<?=$_SESSION['first_name']?>" placeholder="First Name">
+            <input type="text" name="lastName" class="form-control col-md-4 text-center" value="<?=$_SESSION['last_name']?>" placeholder="Last Name">
           </div>
 
           <div class="form-row text-center mt-2">
-            <label for="address" class="col-md-4">Address:</label>
-            <input type="text" name="address" id="address" class="form-control col-md-8 text-center" value="<?=$_SESSION['address']?>" required>
+            <label for="email" class="col-md-4">Email:</label>
+            <input type="text" name="email" id="email" class="form-control col-md-8 text-center" value="<?=$_SESSION['email']?>" required>
           </div>
 
           <div class="form-row text-center mt-2">
@@ -234,17 +219,16 @@
       </div>
     </div>
 
-    <div class="form-row justify-content-center">
-      <button type="submit" name="btnConfirm" class="btn btn-danger btn-block col-md-6">Confirm</button>
+    <div class="container w-50 mx-auto mb-5">
+      <div class="form-row justify-content-center">
+        <button type="submit" name="btnConfirm" class="btn btn-danger btn-block">Confirm</button>
+      </div>
+      <div class="form-row justify-content-center mt-2">
+        <a href="buyTicket.php?ticket_id=<?=$_SESSION['ticket_id']?>" class="btn btn-success btn-block">Back</a>
+      </div>
     </div>
 
-    <div class="container w-50 mx-auto mb-5">
-    <div class="row">
-      <a href="buyTicket.php?ticket_id=<?=$_SESSION['ticket_id']?>" class="btn btn-success btn-block">Back</a>
-    </div>
-  </div>
   </form> 
-  
 
   <!-- Footer -->
   <!-- <footer class="py-5 bg-black">

@@ -22,13 +22,7 @@
   <link href="../css/one-page-wonder.min.css" rel="stylesheet">
 </head>
 <body>
-  <?php
-    if($_SESSION['role'] == "A"){
-      include "adminMenu.php";
-    }else{
-      include "userMenu.php";
-    }
-  ?>
+  <?php include "menubar.php" ?>
   <div class="container text-center mt-5">
     <div class="card mx-auto my-5 w-50 border border-0">
       <div class="card-header bg-white text-danger border-0">
@@ -142,8 +136,13 @@
           <td>$<?=$ticket_detail['ticket_price']?></td>
           <td><?=$ticket_detail['ticket_quantity']?></td>
           <td>
-            <a href="editTicket.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-info">Edit</a>
-            <a href="deleteTicket.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-warning" role="button">Delete</a>
+            <form action="../action/userAction.php" method="post">
+              <div class="form-group row justify-content-around">
+                <a href="editTicket.php?ticket_id=<?=$ticket_detail['ticket_id']?>" class="btn btn-info">Edit</a>
+                <input type="hidden" name="ticket_id" value="<?=$ticket_detail['ticket_id']?>">
+                <button type="submit" name="btnDeleteTicket" class="btn btn-warning">Delete</button>
+              </div>
+            </form>
           </td>
         </tr>
         <?php

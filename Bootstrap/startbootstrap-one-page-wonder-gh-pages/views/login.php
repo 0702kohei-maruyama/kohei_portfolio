@@ -22,7 +22,7 @@
   <link href="../css/one-page-wonder.min.css" rel="stylesheet">
 </head>
 <body>
-  <?php include "loginMenu.php" ?>
+  <?php include "menubar.php" ?>
 
   <div class="container mt-5 text-center">
     <div class="card mx-auto my-5 w-50 border border-0">
@@ -62,7 +62,7 @@
 
           <div class="form-row">
             <div class="form-group col-md-12">
-              <a href="register.php" class="btn btn-danger border-0 rounded-pill px-3 float-right">Creat Account</a>
+              <a href="createAccount.php" class="btn btn-danger border-0 rounded-pill px-3 float-right">Creat Account</a>
             </div>
           </div>
         </form>

@@ -1,10 +1,10 @@
   <?php
-  require_once "Database.php"; 
+  require_once "Database.php";
 
   class Order extends Database {
 
-    public function createOrder($user_id, $ticket_id, $orderChild, $orderQuantity, $totalPrice, $receiverFirstName, $receiverLastName, $receiverAddress, $contactNum, $cardNum, $ccMonth, $ccYear, $pinCode){
-      $sql = "INSERT INTO orders (user_id, ticket_id, order_child, order_quantity, total_price, receiver_first_name, receiver_last_name, receiver_address, receiver_contact, cc_number, cc_month, cc_year, pincode) VALUES ('$user_id', '$ticket_id', '$orderChild', '$orderQuantity', '$totalPrice', '$receiverFirstName', '$receiverLastName', '$receiverAddress', '$contactNum', '$cardNum', '$ccMonth', '$ccYear', '$pinCode')";
+    public function createOrder($user_id, $ticket_id, $orderChild, $orderQuantity, $totalPrice, $receiverFirstName, $receiverLastName, $receiverEmail, $contactNum, $cardNum, $cardName, $ccMonth, $ccYear, $pinCode){
+      $sql = "INSERT INTO orders (user_id, ticket_id, order_child, order_quantity, total_price, receiver_first_name, receiver_last_name, receiver_email, receiver_contact, 	cc_number, cc_name, cc_month, cc_year, pincode) VALUES ('$user_id', '$ticket_id', '$orderChild', '$orderQuantity', '$totalPrice', '$receiverFirstName', '$receiverLastName', '$receiverEmail', '$contactNum', '$cardNum', '$cardName', '$ccMonth', '$ccYear', '$pinCode')";
 
       $result = $this->conn->query($sql);
 

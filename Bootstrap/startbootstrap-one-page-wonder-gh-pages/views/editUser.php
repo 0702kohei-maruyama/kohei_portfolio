@@ -1,7 +1,7 @@
 <?php
   include '../action/userAction.php';
-  $user_id = $_SESSION['user_id'];
-  $users = $user->getUser($user_id);
+  $users = $user->getUser($_SESSION['user_id']);
+  $cards = $card->getCC($_SESSION['user_id']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,15 +30,7 @@
 <body>
 
   <!-- Navigation -->
-  <?php
-    if($_SESSION['role'] == "A"){
-      include "adminMenu.php";
-    }else{
-      include "userMenu.php";
-    }
-  ?>
-
-
+  <?php include "menubar.php" ?>
 
   <div class="container my-5 pt-5">
     <div class="row justify-content-between">
@@ -62,7 +54,7 @@
                   <input type="text" name="lastName" id="lastName" class="form-control" placeholder="<?=$users['last_name']?>" value="<?=$users['last_name']?>" required>
                 </div>
               </div>
-    
+
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <label for="username">Username</label>  
@@ -106,7 +98,101 @@
       </div>
 
       <div class="col-md-5">
-        <div class="card">
+        <div id="cc-info">
+          <div class="card">
+            <div class="card-header bg-success text-center">
+              <h4 class="card-title h2 text-white" data-toggle="collapse" data-target="#cc">
+                Credit Card Information
+                <i class="fas fa-angle-double-down ml-2"></i>
+              </h4>
+            </div>
+            <div class="collapse" id="cc" data-parent="#cc-info">
+              <div class="card-body">
+                <form action="../action/userAction.php" method="post">
+                  <div class="form-row my-2">
+                    <label for="cardNum" class="col-md-4">Card Number</label>
+                    <input type="text" name="cardNum" id="cardNum" class="form-control col-md-8 px-3" maxlength="16" minlength="16" placeholder="0000 0000 0000 0000" value="<?=$cards['cc_number']?>" required>
+                  </div>
+
+                  <div class="form-row my-2">
+                    <label for="ccName" class="col-md-4">Card Owner</label>
+                    <input type="text" name="ccName" id="ccName" class="form-control col-md-8 px-3" placeholder="John Smith" value="<?=$cards['cc_name']?>" required>
+                  </div>
+
+                  <div class="form-row my-2">
+                    <label for="" class="col-md-4">Card Expiry</label>
+                    <select name="ccMonth" id="" class="form-control col-md-4 px-3" required>
+                      <?php
+                        if(empty($cards['cc_month'])){
+                          ?>
+                          <option value="" hidden>MM</option>
+                          <?php
+                        }else{
+                      ?>
+                          <option value="<?=$cards['cc_month']?>" hidden><?=$cards['cc_month']?></option>
+                      <?php
+                        }
+                      ?>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                    </select>
+
+                    <select name="ccYear" id="" class="form-control col-md-4 px-3" required>
+                    <?php
+                        if(empty($cards['cc_year'])){
+                          ?>
+                          <option value="" hidden>YYYY</option>
+                          <?php
+                        }else{
+                      ?>
+                          <option value="<?=$cards['cc_year']?>" hidden><?=$cards['cc_year']?></option>
+                      <?php
+                        }
+                      ?>
+                      <option value="2020">2020</option>
+                      <option value="2021">2021</option>
+                      <option value="2022">2022</option>
+                      <option value="2023">2023</option>
+                      <option value="2024">2024</option>
+                      <option value="2025">2025</option>
+                      <option value="2026">2026</option>
+                      <option value="2027">2027</option>
+                      <option value="2028">2028</option>
+                      <option value="2029">2029</option>
+                      <option value="2030">2030</option>
+                    </select>
+                  </div>
+
+                  <div class="form-row my-2 justify-content-between">
+                    <label for="pinCode" class="col-md-4">CVV</label>
+                    <input type="text" name="pinCode" id="pinCode" class="form-control col-md-3 px-3" maxlength="3" minlength="3" placeholder="123" required>
+                  </div>
+                  
+                  <div class="form-group row mt-3 justify-content-center text-center">
+                    <button type="submit" name="btnSaveCC" class="btn btn-success col-md-6">Save</button>
+                  </div>
+                </form>
+                <form action="../action/userAction.php" method="post">
+                 <div class="form-group row justify-content-center text-right">
+                  <button type="submit" name="btnDeleteCC" class="btn btn-danger col-md-6">Delete</button>
+                 </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-5">
           <div class="card-header">
             <h4 class="card-title text-center">
               Purchase History
@@ -114,7 +200,7 @@
           </div>
           <div class="card-body">
           <?php
-            $order_list = $order->getOrder($user_id);
+            $order_list = $order->getOrder($_SESSION['user_id']);
             if($order_list){
               foreach($order_list as $order_details){
                 // print_r($order_details);
@@ -122,7 +208,12 @@
             <div class="container">
               <div class="row">
                 <p class="col-md-6">Ticket Name:</p>
-                <p class="col-md-6 text-center"><?=$order_details['ticket_name']?></p>
+                <p class="col-md-6 text-center"><?=$order_details['team_home']?> VS <?=$order_details['team_away']?></p>
+              </div>
+
+              <div class="row">
+                <p class="col-md-6">Mutch Date:</p>
+                <p class="col-md-6 text-center"><?=$order_details['ticket_date']?></p>
               </div>
 
               <div class="row">

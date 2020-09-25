@@ -24,13 +24,7 @@
   <link href="../css/one-page-wonder.min.css" rel="stylesheet">
 </head>
 <body>
-  <?php
-    if($_SESSION['role'] == "A"){
-      include "adminMenu.php";
-    }else{
-      include "userMenu.php";
-    }
-  ?>
+  <?php include "menubar.php" ?>
 
   <div class="container mt-5 pt-5 bg-light">
     <div class="row text-center">
@@ -76,10 +70,13 @@
 
           <div class="form-row">
             <h3 class="text-center float-left w-50 display-4">Quantity: </h3>
-            <input type="hidden" name="ticketID"  value="<?=$ticket_details['ticket_id']?>">
-            <input type="hidden" name="ticketCategory"  value="<?=$ticket_details['ticket_category']?>">
-            <input type="hidden" name="ticketPrice"  value="<?=$ticket_details['ticket_price']?>">
-            <input type="hidden" name="ticketQuantity"  value="<?=$ticket_details['ticket_quantity']?>">
+            <input type="hidden" name="ticketID" value="<?=$ticket_details['ticket_id']?>">
+            <input type="hidden" name="team_home" value="<?=$ticket_details['team_home']?>">
+            <input type="hidden" name="team_away" value="<?=$ticket_details['team_away']?>">
+            <input type="hidden" name="date" value="<?=$ticket_details['ticket_date']?>">
+            <input type="hidden" name="ticketCategory" value="<?=$ticket_details['ticket_category']?>">
+            <input type="hidden" name="ticketPrice" value="<?=$ticket_details['ticket_price']?>">
+            <input type="hidden" name="ticketQuantity" value="<?=$ticket_details['ticket_quantity']?>">
             <input type="number" name="orderQuantity" class="form-control mt-2 text-center w-50 float-right border" required>
           </div>
 
@@ -87,57 +84,12 @@
             <h3 class="text-center w-50 display-4">Child: </h3>
             <input type="number" name="orderChild" class="form-control mt-2 text-center  w-50 float-right border" required>
           </div>
-            <p class="text-center"><span class="text-danger">* </span> Child price is 50% of oridinal price.</p>
-            <p class="text-center"><span class="text-danger">* </span> Child is defined as 6-12years old.</p>
-
-          <button type="submit" name="btnCalculate" class="btn btn-block btn-danger">Calculate</button>
+          <p class="text-center"><span class="text-danger">* </span> Child price is 50% of oridinal price.</p>
+          <p class="text-center"><span class="text-danger">* </span> Child is defined as 6-12years old.</p>
+          <button type="submit" name="btnBuy" class="btn btn-block btn-danger">Buy</button>
         </form>
-
-        <?php
-    if(isset($_POST['btnCalculate'])){
-      $ticket_id = $_POST['ticketID'];
-      $ticketCategory = $_POST['ticketCategory'];
-      $ticketPrice = $_POST['ticketPrice'];
-      $ticketQuantity = $_POST['ticketQuantity'];
-      $orderQuantity = $_POST['orderQuantity'];
-      $orderChild = $_POST['orderChild'];
-      $user_id = $_SESSION['user_id'];
-
-      $orderAdult = $orderQuantity - $orderChild;
-      $priceChild = $orderChild * $ticketPrice / 2;
-      $priceAdult = $orderAdult * $ticketPrice;
-      $totalPrice = $priceChild + $priceAdult;
-
-      if($orderQuantity < $orderChild){
-        echo "<h3 class='text-center mt-3'>We cannot accept your order.</h3>";
-      }elseif($orderQuantity > $ticketQuantity){
-        echo "<h3 class='text-center mt-3'>We cannot accept your order.</h3>";
-      }else{
-
-      echo "<div class='row mt-4'>";
-      echo "<h3 class='col-md-6 text-center display-4'>Total: </h3>";
-      echo "<p class='h3col-md-6 text-center display-4'>$$totalPrice</p>";
-      echo "</div>";
-      ?>
-      <form action="payment.php" method="post">
-        <input type="hidden" name="ticketID"  value="<?=$ticket_details['ticket_id']?>">
-        <input type="hidden" name="ticketName"  value="<?=$ticket_details['ticket_name']?>">
-        <input type="hidden" name="ticketCategory"  value="<?=$ticket_details['ticket_category']?>">
-        <input type="hidden" name="ticketPrice"  value="<?=$ticket_details['ticket_price']?>">
-        <input type="hidden" name="ticketQuantity"  value="<?=$ticket_details['ticket_quantity']?>">
-        <input type="hidden" name="orderQuantity" value="<?=$orderQuantity?>">
-        <input type="hidden" name="orderChild" value="<?=$orderChild?>">
-        <input type="hidden" name="totalPrice" value="<?=$totalPrice?>">
-
-        <button type="submit" name="btnBuy" class="btn btn-danger btn-block">Buy</button>
-          
-      </form>
-      <?php
-    }
-  }
-?>
-
-      <a href="shop.php" class="btn btn-success btn-block col-mb-6 mt-2">Cancel</a>
+            
+        <a href="shop.php" class="btn btn-success btn-block col-mb-6 mt-2" id="btnBuy">Cancel</a>
         
       </div>
     </div>
@@ -148,3 +100,76 @@
 </body>
 </html>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+              if(isset($_POST['btnCalculate'])){
+                $ticket_id = $_POST['ticketID'];
+                $team_home = $_POST['team_home'];
+                $team_away = $_POST['team_away'];
+                $ticketCategory = $_POST['ticketCategory'];
+                $ticketPrice = $_POST['ticketPrice'];
+                $ticketQuantity = $_POST['ticketQuantity'];
+                $orderQuantity = $_POST['orderQuantity'];
+                $orderChild = $_POST['orderChild'];
+
+                $orderAdult = $orderQuantity - $orderChild;
+                $priceChild = $orderChild * $ticketPrice / 2;
+                $priceAdult = $orderAdult * $ticketPrice;
+                $totalPrice = $priceChild + $priceAdult;
+
+                if($orderQuantity < $orderChild){
+                  echo "<h3 class='text-center mt-3'>We cannot accept your order.</h3>";
+                }elseif($orderQuantity > $ticketQuantity){
+                  echo "<h3 class='text-center mt-3'>We cannot accept your order.</h3>";
+                }else{
+                echo "<div class='row mt-4'>";
+                echo "<h3 class='col-md-6 text-center display-4'>Total: </h3>";
+                echo "<p class='h3col-md-6 text-center display-4'>$$totalPrice</p>";
+                echo "</div>";
+                ?>
+                <form action="payment.php" method="post">
+                  <input type="hidden" name="ticketID"  value="<?=$ticket_details['ticket_id']?>">
+                  <input type="hidden" name="team_home"  value="<?=$ticket_details['team_home']?>">
+                  <input type="hidden" name="team_away"  value="<?=$ticket_details['team_away']?>">
+                  <input type="hidden" name="ticketCategory"  value="<?=$ticket_details['ticket_category']?>">
+                  <input type="hidden" name="ticketPrice"  value="<?=$ticket_details['ticket_price']?>">
+                  <input type="hidden" name="ticketQuantity"  value="<?=$ticket_details['ticket_quantity']?>">
+                  <input type="hidden" name="orderQuantity" value="<?=$orderQuantity?>">
+                  <input type="hidden" name="orderChild" value="<?=$orderChild?>">
+                  <input type="hidden" name="totalPrice" value="<?=$totalPrice?>">
+
+                  <button type="submit" name="btnBuy" class="btn btn-danger btn-block">Buy</button>
+                </form>
+                <?php
+                }
+              }
+            ?>

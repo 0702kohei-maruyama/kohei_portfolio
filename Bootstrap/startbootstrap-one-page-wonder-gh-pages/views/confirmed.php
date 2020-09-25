@@ -23,17 +23,12 @@
 </head>
 <body>
 
-  <?php
-    if($_SESSION['role'] == "A"){
-      include "adminMenu.php";
-    }else{
-      include "userMenu.php";
-    }
-  ?>
+  <?php include "menubar.php"?>
   
   <div class="container mt-5 py-5">
     <h3 class="display-4 text-center mt-5">THANK YOU FOR YOUR PURCHACE, <?= $_SESSION['username']?>!!</h3>
     <h3 class="display-4 text-center">YOUR ORDER IS CONFIRMED.</h3>
+    <p class="text-center">You will send E-ticket to your e-mail address. Please check your e-mail.</p>
   </div>
   
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
